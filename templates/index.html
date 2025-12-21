@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation Analytics System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-chart-pie"></i>
+                <span>Customer Segmentation Analytics</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active">Home</a>
+                <a href="#" class="nav-link">Documentation</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Customer Segmentation Analytics System</h1>
+            <p>Uncover hidden patterns in your customer base using advanced clustering analysis</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-upload"></i> Step 1: Upload Dataset</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag and drop your CSV file here</p>
+                            <p class="upload-hint">or click to select</p>
+                            <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                        </div>
+                        <div id="fileInfo" class="file-info" style="display: none;">
+                            <div class="success-message">
+                                <i class="fas fa-check-circle"></i>
+                                <span id="fileName"></span>
+                            </div>
+                            <div id="dataStats" class="data-stats"></div>
+                        </div>
+                        <button id="uploadBtn" class="btn btn-primary" style="display: none;">
+                            <i class="fas fa-upload"></i> Upload & Process
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Optimal Clusters Section -->
+            <section class="optimal-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calculator"></i> Step 2: Find Optimal Clusters</h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="section-description">Analyze silhouette scores to determine the optimal number of clusters</p>
+                        <button id="findOptimalBtn" class="btn btn-secondary" disabled>
+                            <i class="fas fa-search"></i> Analyze Clusters
+                        </button>
+                        <div id="optimalChart" style="margin-top: 20px; display: none;">
+                            <div id="silhouetteChart" style="min-height: 300px;"></div>
+                            <div id="optimalResult" class="optimal-result"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clustering Section -->
+            <section class="clustering-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-cubes"></i> Step 3: Perform Clustering</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="nClusters">Number of Clusters:</label>
+                            <div class="slider-container">
+                                <input type="range" id="nClusters" min="2" max="10" value="3" class="slider">
+                                <span id="clusterValue" class="cluster-value">3</span>
+                            </div>
+                        </div>
+                        <button id="clusterBtn" class="btn btn-primary" disabled>
+                            <i class="fas fa-cogs"></i> Run K-Means Clustering
+                        </button>
+                        <div id="clusteringResult" style="margin-top: 20px; display: none;">
+                            <div class="metrics-grid" id="metricsGrid"></div>
+                            <button id="viewResultsBtn" class="btn btn-success">
+                                <i class="fas fa-chart-bar"></i> View Results & Insights
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sample Data Section -->
+            <section class="sample-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-database"></i> Sample Dataset Info</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3>Expected CSV Format</h3>
+                        <p>Your CSV file should contain customer data with numeric features such as:</p>
+                        <ul>
+                            <li><strong>Age</strong> - Customer age</li>
+                            <li><strong>Annual_Income</strong> - Annual income in thousands</li>
+                            <li><strong>Spending_Score</strong> - Spending behavior score (1-100)</li>
+                            <li><strong>Purchase_Frequency</strong> - How often they purchase</li>
+                            <li><strong>Average_Order_Value</strong> - Average order value</li>
+                        </ul>
+                        <p class="note"><i class="fas fa-info-circle"></i> You can include other numeric or categorical columns</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+        <p id="loadingText">Processing...</p>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Customer Segmentation Analytics System | BSIT - Business Analytics</p>
+    </footer>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+</body>
+</html>

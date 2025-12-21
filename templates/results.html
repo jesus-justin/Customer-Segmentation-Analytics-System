@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clustering Results - Customer Segmentation Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-chart-pie"></i>
+                <span>Customer Segmentation Analytics</span>
+            </div>
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}" class="nav-link">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="results-hero">
+        <div class="hero-content">
+            <h1>Clustering Results & Business Insights</h1>
+            <p>Detailed analysis and actionable recommendations for each customer segment</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="results-grid">
+            <!-- Metrics Section -->
+            <section class="metrics-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-ruler"></i> Clustering Quality Metrics</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="metrics-display" id="metricsDisplay"></div>
+                        <div class="metrics-explanation">
+                            <p><strong>Silhouette Score:</strong> Ranges from -1 to 1. Higher values indicate better-defined clusters (0.5+ is good).</p>
+                            <p><strong>Davies-Bouldin Index:</strong> Lower values indicate better cluster separation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Visualizations Section -->
+            <section class="visualization-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-scatter"></i> Customer Segments Visualization</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="scatterPlot" style="min-height: 600px;"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-bar"></i> Cluster Distribution</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="distributionChart" style="min-height: 500px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cluster Analysis Section -->
+            <section class="analysis-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-microscope"></i> Detailed Cluster Analysis</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="clusterAnalysis"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Business Recommendations Section -->
+            <section class="recommendations-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-lightbulb"></i> Business Recommendations</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="recommendationsDisplay"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actions Section -->
+            <section class="actions-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-cog"></i> Actions</h2>
+                    </div>
+                    <div class="card-body">
+                        <button id="exportBtn" class="btn btn-success">
+                            <i class="fas fa-download"></i> Export Results (CSV)
+                        </button>
+                        <button id="resetBtn" class="btn btn-warning">
+                            <i class="fas fa-redo"></i> New Analysis
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+        <p id="loadingText">Generating visualizations...</p>
+    </div>
+
+    <div class="toast-notification" id="toast" style="display: none;"></div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Customer Segmentation Analytics System | BSIT - Business Analytics</p>
+    </footer>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+    <script>
+        // Load results on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadResults();
+        });
+
+        function loadResults() {
+            // Fetch visualizations
+            fetch('/api/visualizations')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Plotly.newPlot('scatterPlot', data.scatter_chart.data, data.scatter_chart.layout);
+                        Plotly.newPlot('distributionChart', data.distribution_chart.data, data.distribution_chart.layout);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+
+            // Display analysis data (you'll need to pass this from Flask or fetch from an endpoint)
+            displayClusterInfo();
+        }
+
+        function displayClusterInfo() {
+            // This will be populated by the results endpoint
+            // For now, we'll use a placeholder
+            fetch('/results', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(html => {
+                // Analysis will be embedded in the response
+            });
+        }
+
+        // Export button
+        document.getElementById('exportBtn').addEventListener('click', function() {
+            fetch('/api/export')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast('Results exported successfully!', 'success');
+                    }
+                });
+        });
+
+        // Reset button
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to reset the analysis?')) {
+                fetch('/api/reset', { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = '/';
+                        }
+                    });
+            }
+        });
+
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast-notification toast-${type}`;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
