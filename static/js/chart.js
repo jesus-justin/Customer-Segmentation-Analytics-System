@@ -127,6 +127,48 @@ function displayDataStats(statistics, features) {
     `;
 
     dataStats.innerHTML = statsHTML;
+    
+    // Fetch and display data quality metrics
+    fetch('/api/data-quality')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                displayDataQuality(data.metrics);
+            }
+        })
+        .catch(error => console.error('Error fetching data quality metrics:', error));
+}
+
+function displayDataQuality(metrics) {
+    const qualityDiv = document.getElementById('dataQuality');
+    const qualityGrid = document.getElementById('qualityGrid');
+    
+    if (!qualityDiv || !metrics) return;
+    
+    let qualityHTML = '';
+    
+    // Display key metrics
+    qualityHTML += `
+        <div class="quality-metric">
+            <div class="quality-label">Total Rows</div>
+            <div class="quality-value">${metrics.total_rows}</div>
+        </div>
+        <div class="quality-metric">
+            <div class="quality-label">Columns</div>
+            <div class="quality-value">${metrics.total_columns}</div>
+        </div>
+        <div class="quality-metric ${metrics.duplicate_rows > 0 ? 'warning' : ''}">
+            <div class="quality-label">Duplicates</div>
+            <div class="quality-value">${metrics.duplicate_rows}</div>
+        </div>
+        <div class="quality-metric">
+            <div class="quality-label">Memory (MB)</div>
+            <div class="quality-value">${metrics.memory_usage_mb}</div>
+        </div>
+    `;
+    
+    qualityGrid.innerHTML = qualityHTML;
+    qualityDiv.style.display = 'block';
 }
 
 // N-Clusters Slider

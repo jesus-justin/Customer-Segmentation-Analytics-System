@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 import pandas as pd
 import numpy as np
-from utils.preprocessing import preprocess_data, get_feature_statistics
+from utils.preprocessing import preprocess_data, get_feature_statistics, get_data_quality_metrics
 from utils.clustering import (
     find_optimal_clusters,
     perform_clustering,
@@ -134,6 +134,35 @@ def upload_file():
     except Exception as e:
         app_logger.error(f"Upload error: {str(e)}", exc_info=True)
         return jsonify({'error': f'Processing error: {str(e)}'}), 500
+
+
+@app.route('/api/data-quality', methods=['GET'])
+def data_quality():
+    """
+    Get data quality metrics for uploaded data.
+    
+    Returns:
+        JSON response with data quality information.
+        Success: {success: true, metrics}
+        Error: {error: error_message}
+    """
+    try:
+        app_logger.info("Data quality metrics requested")
+        
+        if ORIGINAL_DATA is None:
+            app_logger.warning("Data quality metrics requested without data loaded")
+            return jsonify({'error': 'No data loaded'}), 400
+        
+        metrics = get_data_quality_metrics(ORIGINAL_DATA)
+        
+        return jsonify({
+            'success': True,
+            'metrics': metrics
+        }), 200
+    
+    except Exception as e:
+        app_logger.error(f"Data quality error: {str(e)}", exc_info=True)
+        return jsonify({'error': f'Error: {str(e)}'}), 500
 
 
 @app.route('/api/optimal-clusters', methods=['GET'])

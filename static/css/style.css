@@ -249,6 +249,57 @@ body {
     color: var(--primary-color);
 }
 
+/* Data Quality Section */
+.data-quality {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.data-quality h3 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.quality-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+}
+
+.quality-metric {
+    background: white;
+    padding: 0.875rem;
+    border-radius: 6px;
+    border-left: 4px solid var(--secondary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.quality-metric.warning {
+    border-left-color: var(--warning-color);
+}
+
+.quality-metric.error {
+    border-left-color: var(--danger-color);
+}
+
+.quality-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.quality-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
 /* Buttons */
 .btn {
     padding: 0.75rem 1.5rem;
