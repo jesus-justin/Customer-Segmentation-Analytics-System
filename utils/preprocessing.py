@@ -148,3 +148,42 @@ def get_feature_statistics(df: pd.DataFrame) -> Dict[str, Dict[str, float]]:
         Dictionary containing statistics for each feature
     """
     return df.describe().to_dict()
+
+
+def get_data_quality_metrics(df: pd.DataFrame) -> Dict[str, Any]:
+    """
+    Calculate data quality metrics including missing values and duplicates.
+    
+    Args:
+        df: Input DataFrame
+        
+    Returns:
+        Dictionary containing data quality information
+    """
+    numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+    categorical_cols = df.select_dtypes(include=['object']).columns.tolist()
+    
+    return {
+        'total_rows': len(df),
+        'total_columns': len(df.columns),
+        'numeric_columns': len(numeric_cols),
+        'categorical_columns': len(categorical_cols),
+        'duplicate_rows': int(df.duplicated().sum()),
+        'missing_values': df.isnull().sum().to_dict(),
+        'missing_percentage': (df.isnull().sum() / len(df) * 100).round(2).to_dict(),
+        'memory_usage_mb': round(df.memory_usage(deep=True).sum() / 1024 / 1024, 2)
+    }
+
+
+def get_correlation_matrix(df: pd.DataFrame) -> Dict[str, Dict[str, float]]:
+    """
+    Calculate correlation matrix for numeric features.
+    
+    Args:
+        df: Input DataFrame
+        
+    Returns:
+        Correlation matrix as dictionary
+    """
+    numeric_df = df.select_dtypes(include=[np.number])
+    return numeric_df.corr().round(4).to_dict()

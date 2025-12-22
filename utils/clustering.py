@@ -156,3 +156,79 @@ def get_cluster_recommendations(cluster_analysis: Dict[int, Dict[str, Any]]) -> 
         recommendations[cluster_id] = rec
     
     return recommendations
+
+
+def get_cluster_centroids(kmeans: KMeans, feature_names: List[str]) -> Dict[int, Dict[str, float]]:
+    """
+    Extract and format cluster centroids.
+    
+    Args:
+        kmeans: Trained KMeans model
+        feature_names: List of feature names
+        
+    Returns:
+        Dictionary mapping cluster IDs to centroid values
+    """
+    centroids = {}
+    
+    for cluster_id, centroid in enumerate(kmeans.cluster_centers_):
+        centroids[int(cluster_id)] = {
+            feature_names[i]: round(float(centroid[i]), 4) 
+            for i in range(len(feature_names))
+        }
+    
+    return centroids
+
+
+def calculate_inertia(kmeans: KMeans) -> float:
+    """
+    Get the inertia (sum of squared distances to nearest cluster center).
+    
+    Args:
+        kmeans: Trained KMeans model
+        
+    Returns:
+        Inertia value
+    """
+    return round(float(kmeans.inertia_), 4)
+
+
+def get_cluster_profiles(df: pd.DataFrame, original_df: pd.DataFrame, labels: np.ndarray) -> Dict[int, Dict[str, Any]]:
+    """
+    Create detailed cluster profiles with characteristics.
+    
+    Args:
+        df: Normalized DataFrame
+        original_df: Original DataFrame
+        labels: Cluster labels
+        
+    Returns:
+        Dictionary with detailed cluster profiles
+    """
+    df_with_clusters = original_df.copy()
+    df_with_clusters['Cluster'] = labels
+    
+    profiles = {}
+    
+    for cluster_id in sorted(np.unique(labels)):
+        cluster_data = df_with_clusters[df_with_clusters['Cluster'] == cluster_id]
+        numeric_cols = cluster_data.select_dtypes(include=[np.number]).columns
+        numeric_cols = [col for col in numeric_cols if col != 'Cluster']
+        
+        if len(numeric_cols) > 0:
+            profiles[int(cluster_id)] = {
+                'count': int(len(cluster_data)),
+                'percentage': round(len(cluster_data) / len(df_with_clusters) * 100, 2),
+                'mean_values': cluster_data[numeric_cols].mean().round(2).to_dict(),
+                'median_values': cluster_data[numeric_cols].median().round(2).to_dict(),
+                'std_values': cluster_data[numeric_cols].std().round(2).to_dict(),
+                'min_values': cluster_data[numeric_cols].min().round(2).to_dict(),
+                'max_values': cluster_data[numeric_cols].max().round(2).to_dict(),
+            }
+        else:
+            profiles[int(cluster_id)] = {
+                'count': int(len(cluster_data)),
+                'percentage': round(len(cluster_data) / len(df_with_clusters) * 100, 2),
+            }
+    
+    return profiles
