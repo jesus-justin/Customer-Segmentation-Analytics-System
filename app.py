@@ -27,6 +27,12 @@ from utils.clustering import (
     save_model,
     load_model
 )
+from utils.feature_importance import (
+    calculate_feature_importance_in_clusters,
+    get_top_features_per_cluster,
+    generate_cluster_summary
+)
+from utils.export import export_to_csv, export_to_json, export_html_report
 from utils.logger import app_logger
 import plotly
 import plotly.graph_objs as go
@@ -412,6 +418,11 @@ def get_cluster_data():
         cluster_profiles = get_cluster_profiles(PROCESSED_DATA, ORIGINAL_DATA, CLUSTER_LABELS)
         centroids = get_cluster_centroids(KMEANS_MODEL, PROCESSED_DATA.columns.tolist()) if KMEANS_MODEL else {}
         
+        # Calculate additional analytics
+        feature_importance = calculate_feature_importance_in_clusters(PROCESSED_DATA, ORIGINAL_DATA, CLUSTER_LABELS)
+        top_features = get_top_features_per_cluster(ORIGINAL_DATA, CLUSTER_LABELS, n_features=3)
+        cluster_summaries = generate_cluster_summary(ORIGINAL_DATA, PROCESSED_DATA, CLUSTER_LABELS, KMEANS_MODEL)
+        
         return jsonify({
             'success': True,
             'cluster_analysis': cluster_analysis,
@@ -419,6 +430,9 @@ def get_cluster_data():
             'metrics': metrics,
             'cluster_profiles': cluster_profiles,
             'centroids': centroids,
+            'feature_importance': feature_importance,
+            'top_features': top_features,
+            'cluster_summaries': cluster_summaries,
             'n_clusters': len(np.unique(CLUSTER_LABELS))
         }), 200
     
@@ -462,15 +476,31 @@ def export_results():
         export_data = ORIGINAL_DATA.copy()
         export_data['Cluster'] = CLUSTER_LABELS
         
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'clustered_results.csv')
-        export_data.to_csv(filepath, index=False)
+        # Export to CSV using utility
+        csv_path = os.path.join(app.config['UPLOAD_FOLDER'], 'clustered_results.csv')
+        export_to_csv(export_data, CLUSTER_LABELS, csv_path)
         
-        app_logger.info(f"Results exported to {filepath}")
+        # Also export to JSON and HTML for additional formats
+        json_path = os.path.join(app.config['UPLOAD_FOLDER'], 'clustering_report.json')
+        html_path = os.path.join(app.config['UPLOAD_FOLDER'], 'clustering_report.html')
+        
+        cluster_analysis = analyze_clusters(PROCESSED_DATA, ORIGINAL_DATA, CLUSTER_LABELS)
+        recommendations = get_cluster_recommendations(cluster_analysis)
+        metrics = calculate_cluster_metrics(PROCESSED_DATA, CLUSTER_LABELS)
+        
+        export_to_json(cluster_analysis, metrics, recommendations, json_path)
+        export_html_report(cluster_analysis, metrics, recommendations, html_path)
+        
+        app_logger.info(f"Results exported to {csv_path}, {json_path}, {html_path}")
         
         return jsonify({
             'success': True,
-            'message': f'Results exported to {filepath}',
-            'file': filepath
+            'message': f'Results exported successfully',
+            'files': {
+                'csv': csv_path,
+                'json': json_path,
+                'html': html_path
+            }
         }), 200
     
     except Exception as e:
