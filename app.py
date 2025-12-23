@@ -15,13 +15,15 @@ from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 import pandas as pd
 import numpy as np
-from utils.preprocessing import preprocess_data, get_feature_statistics, get_data_quality_metrics
+from utils.preprocessing import preprocess_data, get_feature_statistics, get_data_quality_metrics, get_correlation_matrix
 from utils.clustering import (
     find_optimal_clusters,
     perform_clustering,
     calculate_cluster_metrics,
     analyze_clusters,
     get_cluster_recommendations,
+    get_cluster_profiles,
+    get_cluster_centroids,
     save_model,
     load_model
 )
@@ -165,6 +167,37 @@ def data_quality():
         return jsonify({'error': f'Error: {str(e)}'}), 500
 
 
+@app.route('/api/correlation-matrix', methods=['GET'])
+def correlation_matrix():
+    """
+    Return correlation matrix for numeric features to support heatmap visualization.
+    """
+    try:
+        app_logger.info("Correlation matrix requested")
+        
+        if ORIGINAL_DATA is None:
+            app_logger.warning("Correlation matrix requested without data loaded")
+            return jsonify({'error': 'No data loaded'}), 400
+        
+        numeric_df = ORIGINAL_DATA.select_dtypes(include=[np.number])
+        if numeric_df.empty:
+            app_logger.warning("Correlation matrix requested but no numeric columns found")
+            return jsonify({'error': 'No numeric columns available for correlation'}), 400
+        
+        corr_dict = get_correlation_matrix(numeric_df)
+        features = list(corr_dict.keys())
+        matrix = [[corr_dict[row].get(col, 0) for col in features] for row in features]
+        
+        return jsonify({
+            'success': True,
+            'features': features,
+            'matrix': matrix
+        }), 200
+    except Exception as e:
+        app_logger.error(f"Correlation matrix error: {str(e)}", exc_info=True)
+        return jsonify({'error': f'Correlation error: {str(e)}'}), 500
+
+
 @app.route('/api/optimal-clusters', methods=['GET'])
 def optimal_clusters():
     """
@@ -257,6 +290,8 @@ def cluster():
         
         # Analyze clusters
         cluster_analysis = analyze_clusters(PROCESSED_DATA, ORIGINAL_DATA, CLUSTER_LABELS)
+        cluster_profiles = get_cluster_profiles(PROCESSED_DATA, ORIGINAL_DATA, CLUSTER_LABELS)
+        centroids = get_cluster_centroids(KMEANS_MODEL, PROCESSED_DATA.columns.tolist())
         
         # Get recommendations
         recommendations = get_cluster_recommendations(cluster_analysis)
@@ -270,6 +305,8 @@ def cluster():
             'metrics': metrics,
             'cluster_analysis': cluster_analysis,
             'recommendations': recommendations,
+            'cluster_profiles': cluster_profiles,
+            'centroids': centroids,
             'n_clusters': n_clusters,
             'clustering_time': round(clustering_time, 2)
         }), 200
@@ -372,12 +409,16 @@ def get_cluster_data():
         cluster_analysis = analyze_clusters(PROCESSED_DATA, ORIGINAL_DATA, CLUSTER_LABELS)
         recommendations = get_cluster_recommendations(cluster_analysis)
         metrics = calculate_cluster_metrics(PROCESSED_DATA, CLUSTER_LABELS)
+        cluster_profiles = get_cluster_profiles(PROCESSED_DATA, ORIGINAL_DATA, CLUSTER_LABELS)
+        centroids = get_cluster_centroids(KMEANS_MODEL, PROCESSED_DATA.columns.tolist()) if KMEANS_MODEL else {}
         
         return jsonify({
             'success': True,
             'cluster_analysis': cluster_analysis,
             'recommendations': recommendations,
             'metrics': metrics,
+            'cluster_profiles': cluster_profiles,
+            'centroids': centroids,
             'n_clusters': len(np.unique(CLUSTER_LABELS))
         }), 200
     
