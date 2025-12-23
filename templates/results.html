@@ -68,6 +68,19 @@
                 </div>
             </section>
 
+            <!-- Correlation Heatmap Section -->
+            <section class="correlation-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-th-large"></i> Feature Correlation Heatmap</h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="section-description">See how your numeric features relate to one another to spot multicollinearity and feature importance.</p>
+                        <div id="correlationHeatmap" style="min-height: 500px;"></div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Cluster Analysis Section -->
             <section class="analysis-section">
                 <div class="card">
@@ -76,6 +89,18 @@
                     </div>
                     <div class="card-body">
                         <div id="clusterAnalysis"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cluster Profiles Section -->
+            <section class="profiles-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-user-friends"></i> Cluster Profiles</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="clusterProfiles"></div>
                     </div>
                 </div>
             </section>
@@ -124,75 +149,5 @@
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
-    <script>
-        // Load results on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            loadResults();
-        });
-
-        function loadResults() {
-            // Fetch visualizations
-            fetch('/api/visualizations')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Plotly.newPlot('scatterPlot', data.scatter_chart.data, data.scatter_chart.layout);
-                        Plotly.newPlot('distributionChart', data.distribution_chart.data, data.distribution_chart.layout);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-
-            // Display analysis data (you'll need to pass this from Flask or fetch from an endpoint)
-            displayClusterInfo();
-        }
-
-        function displayClusterInfo() {
-            // This will be populated by the results endpoint
-            // For now, we'll use a placeholder
-            fetch('/results', {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.text())
-            .then(html => {
-                // Analysis will be embedded in the response
-            });
-        }
-
-        // Export button
-        document.getElementById('exportBtn').addEventListener('click', function() {
-            fetch('/api/export')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showToast('Results exported successfully!', 'success');
-                    }
-                });
-        });
-
-        // Reset button
-        document.getElementById('resetBtn').addEventListener('click', function() {
-            if (confirm('Are you sure you want to reset the analysis?')) {
-                fetch('/api/reset', { method: 'POST' })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            window.location.href = '/';
-                        }
-                    });
-            }
-        });
-
-        function showToast(message, type) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = `toast-notification toast-${type}`;
-            toast.style.display = 'block';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 3000);
-        }
-    </script>
 </body>
 </html>
