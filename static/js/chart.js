@@ -299,25 +299,30 @@ function displayOptimalChart(chartData, optimalK) {
         mode: 'lines+markers',
         name: 'Silhouette Score',
         line: {
-            color: '#2563eb',
-            width: 3
+            color: ChartColors.vibrant[0],
+            width: 4,
+            shape: 'spline',
+            smoothing: 1.3
         },
         marker: {
-            size: 8,
-            color: '#2563eb'
-        }
+            size: 12,
+            color: ChartColors.vibrant[0],
+            line: {
+                color: 'white',
+                width: 2
+            }
+        },
+        fill: 'tonexty',
+        fillcolor: 'rgba(255, 107, 107, 0.1)'
     };
 
-    const layout = {
-        title: 'Silhouette Score vs Number of Clusters',
-        xaxis: { title: 'Number of Clusters (k)' },
-        yaxis: { title: 'Silhouette Score' },
-        plot_bgcolor: 'rgba(240, 240, 240, 0.9)',
-        paper_bgcolor: 'white',
-        font: { family: 'Arial, sans-serif', size: 12 }
-    };
+    const layout = getChartLayout(
+        'Silhouette Score Analysis',
+        'Number of Clusters (k)',
+        'Silhouette Score'
+    );
 
-    Plotly.newPlot('silhouetteChart', [trace], layout);
+    Plotly.newPlot('silhouetteChart', [trace], layout, ChartAnimationConfig);
 
     const resultHTML = `
         <p style="color: #10b981; font-weight: bold; font-size: 1.1rem;">
