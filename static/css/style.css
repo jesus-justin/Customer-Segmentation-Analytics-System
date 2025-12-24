@@ -1057,35 +1057,91 @@ body > * {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 1.25rem 1.75rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     z-index: 999;
-    animation: slideIn 0.3s ease;
+    animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+    max-width: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-@keyframes slideIn {
+@keyframes slideInRight {
     from {
-        transform: translateX(400px);
+        transform: translateX(500px);
+        opacity: 0;
     }
     to {
         transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.toast-notification.hiding {
+    animation: slideOutRight 0.3s ease forwards;
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(500px);
+        opacity: 0;
     }
 }
 
 .toast-success {
-    background-color: var(--success-color);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.95) 0%, rgba(22, 163, 74, 0.95) 100%);
     color: white;
+    border-left: 4px solid rgba(255, 255, 255, 0.5);
 }
 
 .toast-error {
-    background-color: var(--danger-color);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(220, 38, 38, 0.95) 100%);
     color: white;
+    border-left: 4px solid rgba(255, 255, 255, 0.5);
 }
 
 .toast-warning {
-    background-color: var(--warning-color);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.95) 0%, rgba(217, 119, 6, 0.95) 100%);
     color: white;
+    border-left: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+.toast-info {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(30, 64, 175, 0.95) 100%);
+    color: white;
+    border-left: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+.toast-notification i {
+    font-size: 1.25rem;
+}
+
+.toast-notification::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.6) 50%, 
+        transparent 100%);
+    animation: shimmerToast 2s linear infinite;
+}
+
+@keyframes shimmerToast {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
 /* Footer */
