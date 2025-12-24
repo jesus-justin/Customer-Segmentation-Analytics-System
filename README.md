@@ -30,6 +30,18 @@ A professional, **production-ready machine learning web application** for analyz
 - 📚 **API Documentation** - Complete REST API reference with examples
 - 🚀 **Production Deployment** - Gunicorn, Nginx, and Docker instructions
 
+### Modern UI/UX Features
+- 🌙 **Dark/Light Mode** - Theme switcher with localStorage persistence
+- 🎨 **Glassmorphism Design** - Modern card and button effects with backdrop blur
+- ✨ **Smooth Animations** - Floating shapes, gradient animations, and transitions
+- 📱 **Fully Responsive** - Mobile-first design with optimized layouts for all devices
+- 🎭 **Loading States** - Beautiful skeleton screens and enhanced spinner animations
+- 📊 **Animated Counters** - Number animations for statistics and metrics
+- 🎪 **Toast Notifications** - Elegant notification system with animations
+- 🖱️ **Custom Scrollbars** - Theme-aware scrollbar styling
+- 🎨 **Enhanced Charts** - Beautiful color palettes and improved data visualization
+- ⚡ **Micro-interactions** - Hover effects, ripple animations, and visual feedback
+
 ---
 
 ## 🎯 Use Cases
