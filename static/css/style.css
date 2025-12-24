@@ -909,6 +909,26 @@ body > * {
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    .container {
+        padding: 1.5rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.3rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-links {
+        gap: 1rem;
+    }
+}
+
 @media (max-width: 768px) {
     .main-grid,
     .results-grid {
@@ -916,12 +936,35 @@ body > * {
     }
 
     .hero-content h1 {
-        font-size: 1.75rem;
+        font-size: 1.9rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+    
+    .hero {
+        padding: 3rem 1.5rem;
     }
 
     .nav-container {
         flex-direction: column;
         gap: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .logo i {
+        font-size: 1.5rem;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
     }
 
     .metrics-grid,
@@ -941,6 +984,55 @@ body > * {
         bottom: 1rem;
         right: 1rem;
         left: 1rem;
+    }
+    
+    .card-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .quality-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .data-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .slider-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .cluster-value {
+        align-self: center;
+        margin-top: 0.5rem;
     }
 }
 
