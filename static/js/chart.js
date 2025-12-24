@@ -3,6 +3,49 @@
    Handles all client-side interactions and API calls
 */
 
+// Animated Counter Function
+function animateCounter(element, target, duration = 1000, decimals = 0) {
+    const start = 0;
+    const increment = target / (duration / 16);
+    let current = start;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        element.textContent = decimals > 0 ? current.toFixed(decimals) : Math.floor(current);
+    }, 16);
+}
+
+// Animate elements when they come into view
+function observeElements() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                
+                // Animate counters
+                if (entry.target.classList.contains('stat-value') || 
+                    entry.target.classList.contains('metric-value')) {
+                    const value = parseFloat(entry.target.dataset.value || entry.target.textContent);
+                    const decimals = entry.target.dataset.decimals || 0;
+                    if (!isNaN(value)) {
+                        animateCounter(entry.target, value, 1000, parseInt(decimals));
+                    }
+                }
+                
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.card, .stat-item, .metric-card').forEach(el => {
+        observer.observe(el);
+    });
+}
+
 // Dark Mode Toggle Functionality
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
@@ -29,6 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
             themeIcon.className = theme === 'dark' ? 'fas fa-moon theme-toggle-icon' : 'fas fa-sun theme-toggle-icon';
         }
     }
+    
+    // Initialize animation observers
+    observeElements();
 });
 
 // Global state
