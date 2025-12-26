@@ -3,6 +3,19 @@
  * Smooth scrolling, animations, and interactive elements
  */
 
+// Preloader
+window.addEventListener('load', function() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        setTimeout(() => {
+            preloader.classList.add('hidden');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        }, 1000);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
