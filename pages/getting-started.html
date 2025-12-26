@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - Customer Segmentation Analytics</title>
+    <link rel="stylesheet" href="/Customer-Segmentation-Analytics-System/static/css/style.css">
+    <link rel="stylesheet" href="/Customer-Segmentation-Analytics-System/static/css/landing.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: "Segoe UI", Arial, sans-serif; background: #f8fafc; margin: 0; }
+        .nav { background: #fff; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .nav a { color: #2563eb; text-decoration: none; font-weight: 600; }
+        .container { max-width: 800px; margin: 5rem auto; padding: 0 2rem; text-align: center; }
+        .container h1 { font-size: 2.5rem; color: #1e293b; margin-bottom: 1rem; }
+        .container p { color: #475569; font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; }
+        .steps { text-align: left; background: #fff; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+        .step { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; }
+        .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .step h3 { color: #2563eb; margin-top: 0; }
+        .step p { color: #475569; margin: 0.5rem 0 0; }
+        .btn-primary { display: inline-block; background: linear-gradient(135deg, #2563eb, #1e40af); color: #fff; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; margin: 0.5rem 0.5rem 0.5rem 0; transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3); }
+        .btn-secondary { display: inline-block; background: #fff; color: #2563eb; border: 2px solid #2563eb; padding: 0.9rem 1.9rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
+        .btn-secondary:hover { background: #2563eb; color: #fff; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="/Customer-Segmentation-Analytics-System/templates/home.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        <div>
+            <a href="/Customer-Segmentation-Analytics-System/src/app.py" style="margin-right: 1rem;">📊 Live Analytics</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1><i class="fas fa-rocket" style="color: #2563eb;"></i> Getting Started</h1>
+        <p>Follow these simple steps to start analyzing your customer data with our powerful segmentation platform.</p>
+
+        <div class="steps">
+            <div class="step">
+                <h3>Step 1: Prepare Your Data</h3>
+                <p>Get your customer data ready in CSV format. Include numeric features like Age, Annual Income, Spending Score, etc.</p>
+            </div>
+
+            <div class="step">
+                <h3>Step 2: Upload Your File</h3>
+                <p>Click the upload button on the dashboard and drag-and-drop your CSV file. Our system will automatically validate and preprocess it.</p>
+            </div>
+
+            <div class="step">
+                <h3>Step 3: Analyze Clusters</h3>
+                <p>Let our AI find the optimal number of customer segments using advanced machine learning algorithms.</p>
+            </div>
+
+            <div class="step">
+                <h3>Step 4: Review Results</h3>
+                <p>Explore interactive visualizations and get actionable insights for each customer segment. Export results for further analysis.</p>
+            </div>
+
+            <div class="step">
+                <h3>Step 5: Take Action</h3>
+                <p>Use the insights to create targeted marketing campaigns and improve your business strategy.</p>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <a href="/Customer-Segmentation-Analytics-System/src/app.py" class="btn-primary" target="_blank">
+                <i class="fas fa-chart-pie"></i> Open Analytics Dashboard
+            </a>
+            <a href="/Customer-Segmentation-Analytics-System/templates/home.html" class="btn-secondary">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+
+        <div style="background: #eef2ff; padding: 1.5rem; border-radius: 12px; margin-top: 2rem;">
+            <h3 style="color: #2563eb; margin-top: 0;">Need Help?</h3>
+            <p style="color: #475569; margin-bottom: 0;">
+                Check out our <a href="/Customer-Segmentation-Analytics-System/docs/QUICK_START.md" style="color: #2563eb; font-weight: 600;">Quick Start Guide</a> or 
+                <a href="/Customer-Segmentation-Analytics-System/docs/LANDING_PAGE.md" style="color: #2563eb; font-weight: 600;">Documentation</a> for detailed instructions.
+            </p>
+        </div>
+    </div>
+
+    <!-- Redirect after 5 seconds if opened standalone -->
+    <script>
+        // If user landed here directly, optionally auto-redirect to analytics after 5 seconds
+        // Uncomment the line below to enable auto-redirect
+        // setTimeout(() => { window.location.href = '/Customer-Segmentation-Analytics-System/src/app.py'; }, 5000);
+    </script>
+</body>
+</html>

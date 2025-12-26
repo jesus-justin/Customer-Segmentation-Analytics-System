@@ -18,7 +18,26 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+    <!-- Fallbacks for direct file access (non-Flask) -->
+    <link rel="stylesheet" href="/Customer-Segmentation-Analytics-System/static/css/style.css">
+    <link rel="stylesheet" href="/Customer-Segmentation-Analytics-System/static/css/landing.css">
+    <link rel="stylesheet" href="/Customer-Segmentation-Analytics-System/static/css/animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Minimal inline fallback if external styles fail (keeps layout readable) -->
+    <style>
+        body { font-family: "Segoe UI", Arial, sans-serif; background: #f8fafc; color: #1e293b; margin: 0; }
+        .section-container { max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; }
+        .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.75rem; }
+        .section-subtitle { text-align: center; color: #64748b; margin-bottom: 2rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+        .feature-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
+        .feature-card h3 { margin: 0 0 0.5rem; }
+        .feature-card p { margin: 0; color: #475569; line-height: 1.6; }
+        .benefits-section, .how-it-works-section, .features-section { background: linear-gradient(135deg, #eef2ff 0%, #fff 70%); }
+        .btn-nav-primary { background: linear-gradient(135deg, #2563eb, #1e40af); color: #fff; padding: 0.75rem 1.4rem; border-radius: 999px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
+    </style>
 </head>
 <body>
     <!-- Preloader -->
@@ -48,7 +67,7 @@
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#how-it-works" class="nav-link">How It Works</a>
                 <a href="#benefits" class="nav-link">Benefits</a>
-                <a href="{{ url_for('index') }}" class="btn-nav-primary">
+                <a href="/Customer-Segmentation-Analytics-System/pages/getting-started.html" class="btn-nav-primary" id="getStartedNav">
                     <i class="fas fa-rocket"></i> Get Started
                 </a>
             </div>
@@ -78,7 +97,7 @@
                     identify patterns, and drive targeted business strategies with precision.
                 </p>
                 <div class="hero-cta">
-                    <a href="{{ url_for('index') }}" class="btn-hero-primary">
+                    <a href="/Customer-Segmentation-Analytics-System/pages/getting-started.html" class="btn-hero-primary" id="getStartedBtn">
                         <i class="fas fa-play-circle"></i>
                         Start Analyzing Now
                     </a>
@@ -354,5 +373,34 @@
     </button>
 
     <script src="{{ url_for('static', filename='js/landing.js') }}"></script>
+    <!-- Fallback for direct file access (non-Flask) -->
+    <script src="/Customer-Segmentation-Analytics-System/static/js/landing.js"></script>
+
+    <!-- Safety net: hide preloader after 3s even if JS/CSS fails -->
+    <script>
+        (function() {
+            var pre = document.getElementById('preloader');
+            if (pre) {
+                setTimeout(function() {
+                    pre.style.opacity = '0';
+                    pre.style.visibility = 'hidden';
+                    pre.style.display = 'none';
+                    document.body.style.overflow = '';
+                }, 3000);
+            }
+
+            // Fix Get Started links when template tags are not rendered (static file access)
+            var fallback = '/Customer-Segmentation-Analytics-System/templates/get-started.html';
+            ['getStartedBtn', 'getStartedNav'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) {
+                    var href = el.getAttribute('href') || '';
+                    if (href.indexOf('{{') !== -1 || href.indexOf('url_for') !== -1) {
+                        el.setAttribute('href', fallback);
+                    }
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
