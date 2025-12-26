@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation Analytics - AI-Powered Customer Insights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="Transform your customer data into actionable insights with our advanced AI-powered segmentation analytics platform">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="landing-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-chart-network"></i>
+                <span class="logo-text">Customer<span class="highlight">Analytics</span></span>
+            </div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#benefits" class="nav-link">Benefits</a>
+                <a href="{{ url_for('index') }}" class="btn-nav-primary">
+                    <i class="fas fa-rocket"></i> Get Started
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-landing">
+        <div class="hero-background">
+            <div class="hero-particles"></div>
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content-main">
+                <div class="hero-badge">
+                    <i class="fas fa-sparkles"></i>
+                    <span>AI-Powered Analytics Platform</span>
+                </div>
+                <h1 class="hero-title">
+                    Transform Customer Data Into
+                    <span class="gradient-text">Actionable Insights</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Leverage advanced machine learning algorithms to segment your customers, 
+                    identify patterns, and drive targeted business strategies with precision.
+                </p>
+                <div class="hero-cta">
+                    <a href="{{ url_for('index') }}" class="btn-hero-primary">
+                        <i class="fas fa-play-circle"></i>
+                        Start Analyzing Now
+                    </a>
+                    <a href="#how-it-works" class="btn-hero-secondary">
+                        <i class="fas fa-info-circle"></i>
+                        Learn More
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Customers Analyzed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5min</div>
+                        <div class="stat-label">Average Processing</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="dashboard-preview">
+                    <div class="preview-card card-1">
+                        <div class="preview-icon"><i class="fas fa-users"></i></div>
+                        <div class="preview-text">Customer Segments</div>
+                        <div class="preview-graph"></div>
+                    </div>
+                    <div class="preview-card card-2">
+                        <div class="preview-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="preview-text">Real-time Analytics</div>
+                        <div class="preview-chart"></div>
+                    </div>
+                    <div class="preview-card card-3">
+                        <div class="preview-icon"><i class="fas fa-brain"></i></div>
+                        <div class="preview-text">ML Insights</div>
+                        <div class="preview-pulse"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Features for Deep Customer Understanding</h2>
+                <p class="section-subtitle">Everything you need to unlock customer insights in one platform</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon icon-purple">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Advanced ML Algorithms</h3>
+                    <p>Leverage K-Means clustering and sophisticated machine learning techniques to identify meaningful customer segments automatically.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-blue">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Interactive Visualizations</h3>
+                    <p>Explore your data through stunning, interactive charts and graphs powered by Plotly for comprehensive insights.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-green">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Real-time Processing</h3>
+                    <p>Upload and analyze datasets instantly with our optimized processing pipeline that handles thousands of records effortlessly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-orange">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Data Quality Checks</h3>
+                    <p>Automatically validate data quality, detect anomalies, and ensure your analysis is built on reliable information.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-red">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3>Export & Reports</h3>
+                    <p>Export segmentation results in CSV, JSON, or comprehensive HTML reports for presentations and further analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-cyan">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Customizable Parameters</h3>
+                    <p>Fine-tune clustering parameters, select optimal cluster numbers, and customize the analysis to fit your business needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Simple, streamlined process from data to insights</p>
+            </div>
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3>Upload Your Data</h3>
+                    <p>Simply drag and drop your customer CSV file. Our system accepts various formats and automatically preprocesses the data.</p>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Optimize Clusters</h3>
+                    <p>Let our AI determine the optimal number of customer segments using silhouette analysis and elbow method.</p>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>Generate Insights</h3>
+                    <p>View comprehensive analytics, interactive visualizations, and actionable recommendations for each customer segment.</p>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Take Action</h3>
+                    <p>Export results, share reports with stakeholders, and implement targeted marketing strategies based on insights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section">
+        <div class="section-container">
+            <div class="benefits-content">
+                <div class="benefits-text">
+                    <h2 class="section-title">Why Choose Our Platform?</h2>
+                    <div class="benefit-list">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Increase Marketing ROI</h4>
+                                <p>Target the right customers with personalized campaigns based on data-driven segments.</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Reduce Customer Churn</h4>
+                                <p>Identify at-risk segments early and implement retention strategies proactively.</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Optimize Resource Allocation</h4>
+                                <p>Focus your efforts on high-value customer segments for maximum impact.</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Data-Driven Decision Making</h4>
+                                <p>Replace gut feelings with concrete insights backed by machine learning analysis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="benefits-visual">
+                    <div class="metrics-showcase">
+                        <div class="metric-card">
+                            <div class="metric-icon"><i class="fas fa-arrow-up"></i></div>
+                            <div class="metric-value">45%</div>
+                            <div class="metric-label">Increase in Conversion</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon"><i class="fas fa-users"></i></div>
+                            <div class="metric-value">3.2x</div>
+                            <div class="metric-label">Better Targeting</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon"><i class="fas fa-dollar-sign"></i></div>
+                            <div class="metric-value">60%</div>
+                            <div class="metric-label">Cost Reduction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Ready to Transform Your Customer Strategy?</h2>
+            <p>Start analyzing your customer data today and unlock powerful insights in minutes.</p>
+            <a href="{{ url_for('index') }}" class="btn-cta">
+                <i class="fas fa-rocket"></i>
+                Get Started Free
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-chart-network"></i>
+                        <span>Customer<span class="highlight">Analytics</span></span>
+                    </div>
+                    <p>Advanced AI-powered customer segmentation platform for data-driven business decisions.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="{{ url_for('index') }}">Analytics Dashboard</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Customer Segmentation Analytics System. All rights reserved.</p>
+                <p>Built with <i class="fas fa-heart"></i> for better business insights</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/landing.js') }}"></script>
+</body>
+</html>
