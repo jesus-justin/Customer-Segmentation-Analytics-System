@@ -133,7 +133,8 @@
             transition: all 0.3s ease;
             animation: fadeInUp 0.6s ease-out;
             position: relative;
-            overflow: hidden;
+            /* Ensure step number badge isn't clipped */
+            overflow: visible;
         }
 
         .step-card::before {
@@ -171,6 +172,8 @@
             font-weight: 700;
             font-size: 1.2rem;
             margin-bottom: 1rem;
+            /* Make sure badge renders above card */
+            z-index: 1;
         }
 
         .step-card h3 {
