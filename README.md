@@ -7,6 +7,15 @@
 
 A professional, **production-ready machine learning web application** for analyzing and segmenting customers using K-Means clustering. Built with **Flask**, **Scikit-Learn**, and **Plotly** - perfect for business analytics, portfolio projects, and enterprise deployments.
 
+## 🌟 New: Professional Landing Page
+
+Experience our **beautifully designed landing page** featuring:
+- 🎨 Modern hero section with animated gradients
+- ⚡ Interactive feature showcase
+- 📱 Fully responsive design
+- 🎯 Step-by-step workflow visualization
+- 💼 Professional presentation ready for company interviews
+
 ---
 
 ## ✨ Key Features
