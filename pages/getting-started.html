@@ -6,87 +6,419 @@
     <title>Getting Started - Customer Segmentation Analytics</title>
     <link rel="stylesheet" href="/Customer-Segmentation-Analytics-System/static/css/style.css">
     <link rel="stylesheet" href="/Customer-Segmentation-Analytics-System/static/css/landing.css">
+    <link rel="stylesheet" href="/Customer-Segmentation-Analytics-System/static/css/animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: "Segoe UI", Arial, sans-serif; background: #f8fafc; margin: 0; }
-        .nav { background: #fff; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
-        .nav a { color: #2563eb; text-decoration: none; font-weight: 600; }
-        .container { max-width: 800px; margin: 5rem auto; padding: 0 2rem; text-align: center; }
-        .container h1 { font-size: 2.5rem; color: #1e293b; margin-bottom: 1rem; }
-        .container p { color: #475569; font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; }
-        .steps { text-align: left; background: #fff; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 2rem; }
-        .step { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; }
-        .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .step h3 { color: #2563eb; margin-top: 0; }
-        .step p { color: #475569; margin: 0.5rem 0 0; }
-        .btn-primary { display: inline-block; background: linear-gradient(135deg, #2563eb, #1e40af); color: #fff; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; margin: 0.5rem 0.5rem 0.5rem 0; transition: all 0.3s ease; }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3); }
-        .btn-secondary { display: inline-block; background: #fff; color: #2563eb; border: 2px solid #2563eb; padding: 0.9rem 1.9rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
-        .btn-secondary:hover { background: #2563eb; color: #fff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .navbar-brand i {
+            color: #2563eb;
+            font-size: 1.8rem;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .navbar-links a {
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-links a:hover {
+            color: #2563eb;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #2563eb, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #475569;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .icon-circle {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Steps Container */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .step-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #9333ea);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            border-color: #2563eb;
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+        }
+
+        .step-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.3rem;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            margin-top: 0;
+        }
+
+        .step-card p {
+            color: #475569;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+
+        .btn-secondary:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #eef2ff 0%, #f3f4f6 100%);
+            border-left: 4px solid #2563eb;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .info-box h3 {
+            color: #2563eb;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-box p {
+            color: #475569;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .info-box a {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .info-box a:hover {
+            color: #1e40af;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar-links { gap: 1rem; }
+            .hero-section h1 { font-size: 2rem; }
+            .hero-section p { font-size: 1rem; }
+            .cta-section { padding: 2rem; }
+            .button-group { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+            .steps-grid { grid-template-columns: 1fr; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="/Customer-Segmentation-Analytics-System/templates/home.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
-        <div>
-            <a href="/Customer-Segmentation-Analytics-System/src/app.py" style="margin-right: 1rem;">📊 Live Analytics</a>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/Customer-Segmentation-Analytics-System/templates/home.html" class="navbar-brand">
+                <i class="fas fa-chart-network"></i>
+                <span>Customer Analytics</span>
+            </a>
+            <div class="navbar-links">
+                <a href="/Customer-Segmentation-Analytics-System/templates/home.html">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
         </div>
     </nav>
 
+    <!-- Main Content -->
     <div class="container">
-        <h1><i class="fas fa-rocket" style="color: #2563eb;"></i> Getting Started</h1>
-        <p>Follow these simple steps to start analyzing your customer data with our powerful segmentation platform.</p>
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="icon-circle">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h1>Getting Started</h1>
+            <p>Follow these simple steps to unlock powerful customer insights and drive data-driven business decisions.</p>
+        </div>
 
-        <div class="steps">
-            <div class="step">
-                <h3>Step 1: Prepare Your Data</h3>
-                <p>Get your customer data ready in CSV format. Include numeric features like Age, Annual Income, Spending Score, etc.</p>
+        <!-- Steps Grid -->
+        <div class="steps-grid">
+            <div class="step-card" style="animation-delay: 0.1s;">
+                <div class="step-number">1</div>
+                <h3><i class="fas fa-file-csv" style="color: #2563eb; margin-right: 0.5rem;"></i>Prepare Your Data</h3>
+                <p>Get your customer data ready in CSV format. Include numeric features like Age, Annual Income, Spending Score, and more.</p>
             </div>
 
-            <div class="step">
-                <h3>Step 2: Upload Your File</h3>
-                <p>Click the upload button on the dashboard and drag-and-drop your CSV file. Our system will automatically validate and preprocess it.</p>
+            <div class="step-card" style="animation-delay: 0.2s;">
+                <div class="step-number">2</div>
+                <h3><i class="fas fa-cloud-upload-alt" style="color: #10b981; margin-right: 0.5rem;"></i>Upload Your File</h3>
+                <p>Click upload on the dashboard and drag-and-drop your CSV. Our system automatically validates and preprocesses your data.</p>
             </div>
 
-            <div class="step">
-                <h3>Step 3: Analyze Clusters</h3>
-                <p>Let our AI find the optimal number of customer segments using advanced machine learning algorithms.</p>
+            <div class="step-card" style="animation-delay: 0.3s;">
+                <div class="step-number">3</div>
+                <h3><i class="fas fa-brain" style="color: #f59e0b; margin-right: 0.5rem;"></i>Analyze & Optimize</h3>
+                <p>Let our AI find the optimal number of segments using silhouette analysis and advanced machine learning algorithms.</p>
             </div>
 
-            <div class="step">
-                <h3>Step 4: Review Results</h3>
-                <p>Explore interactive visualizations and get actionable insights for each customer segment. Export results for further analysis.</p>
+            <div class="step-card" style="animation-delay: 0.4s;">
+                <div class="step-number">4</div>
+                <h3><i class="fas fa-chart-pie" style="color: #8b5cf6; margin-right: 0.5rem;"></i>Explore Insights</h3>
+                <p>Interactive visualizations show segment profiles, patterns, and correlations. Get actionable recommendations for each segment.</p>
             </div>
 
-            <div class="step">
-                <h3>Step 5: Take Action</h3>
-                <p>Use the insights to create targeted marketing campaigns and improve your business strategy.</p>
+            <div class="step-card" style="animation-delay: 0.5s;">
+                <div class="step-number">5</div>
+                <h3><i class="fas fa-download" style="color: #ef4444; margin-right: 0.5rem;"></i>Export & Share</h3>
+                <p>Download results in CSV or JSON format. Create comprehensive HTML reports to share with your team and stakeholders.</p>
+            </div>
+
+            <div class="step-card" style="animation-delay: 0.6s;">
+                <div class="step-number">6</div>
+                <h3><i class="fas fa-bullseye" style="color: #06b6d4; margin-right: 0.5rem;"></i>Take Action</h3>
+                <p>Use insights to create targeted marketing campaigns, improve customer retention, and optimize business strategy.</p>
             </div>
         </div>
 
-        <div style="margin-bottom: 2rem;">
-            <a href="/Customer-Segmentation-Analytics-System/src/app.py" class="btn-primary" target="_blank">
-                <i class="fas fa-chart-pie"></i> Open Analytics Dashboard
-            </a>
-            <a href="/Customer-Segmentation-Analytics-System/templates/home.html" class="btn-secondary">
-                <i class="fas fa-home"></i> Back to Home
-            </a>
-        </div>
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Ready to Transform Your Customer Strategy?</h2>
+            <p>Start analyzing your customer data now and unlock powerful insights in minutes. Our AI-powered platform makes it simple.</p>
+            
+            <div class="button-group">
+                <a href="http://localhost:5000/analytics" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-play-circle"></i>
+                    Open Analytics Dashboard
+                </a>
+                <a href="/Customer-Segmentation-Analytics-System/templates/home.html" class="btn btn-secondary">
+                    <i class="fas fa-home"></i>
+                    Back to Home
+                </a>
+            </div>
 
-        <div style="background: #eef2ff; padding: 1.5rem; border-radius: 12px; margin-top: 2rem;">
-            <h3 style="color: #2563eb; margin-top: 0;">Need Help?</h3>
-            <p style="color: #475569; margin-bottom: 0;">
-                Check out our <a href="/Customer-Segmentation-Analytics-System/docs/QUICK_START.md" style="color: #2563eb; font-weight: 600;">Quick Start Guide</a> or 
-                <a href="/Customer-Segmentation-Analytics-System/docs/LANDING_PAGE.md" style="color: #2563eb; font-weight: 600;">Documentation</a> for detailed instructions.
-            </p>
+            <div class="info-box">
+                <h3><i class="fas fa-info-circle"></i> Pro Tip</h3>
+                <p>Use our sample dataset to familiarize yourself with the platform before uploading your own data. <a href="http://localhost:5000/analytics">Download sample data</a> on the dashboard.</p>
+            </div>
         </div>
     </div>
 
-    <!-- Redirect after 5 seconds if opened standalone -->
-    <script>
-        // If user landed here directly, optionally auto-redirect to analytics after 5 seconds
-        // Uncomment the line below to enable auto-redirect
-        // setTimeout(() => { window.location.href = '/Customer-Segmentation-Analytics-System/src/app.py'; }, 5000);
-    </script>
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Customer Segmentation Analytics System | AI-Powered Customer Insights</p>
+    </footer>
 </body>
 </html>
+
