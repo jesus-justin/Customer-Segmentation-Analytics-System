@@ -592,6 +592,13 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/health')
+def health():
+    """Simple health check endpoint for operational monitoring."""
+    app_logger.debug("Health check requested")
+    return jsonify({'status': 'ok', 'timestamp': int(time.time())}), 200
+
+
 @app.errorhandler(404)
 def not_found(error):
     """
