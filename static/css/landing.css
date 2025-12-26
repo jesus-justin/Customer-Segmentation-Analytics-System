@@ -550,6 +550,22 @@
     position: relative;
 }
 
+.features-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 300px;
+    background: linear-gradient(180deg, #f8fafc 0%, white 100%);
+    z-index: 0;
+}
+
+.features-section .section-container {
+    position: relative;
+    z-index: 1;
+}
+
 .features-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
