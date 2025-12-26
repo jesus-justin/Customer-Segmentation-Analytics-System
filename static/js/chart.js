@@ -64,6 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             updateThemeIcon(newTheme);
+            
+            // Update charts on theme change if on results page
+            if (window.location.pathname === '/results') {
+                updateChartsTheme();
+            }
         });
     }
     
@@ -76,6 +81,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize animation observers
     observeElements();
 });
+
+// Update chart themes
+function updateChartsTheme() {
+    const scatterDiv = document.getElementById('scatterPlot');
+    const distDiv = document.getElementById('distributionChart');
+    const heatmapDiv = document.getElementById('correlationHeatmap');
+    
+    // Update scatter plot if it exists
+    if (scatterDiv && scatterDiv.data) {
+        Plotly.relayout('scatterPlot', getChartLayout('Customer Segments Visualization'));
+    }
+    
+    // Update distribution chart if it exists
+    if (distDiv && distDiv.data) {
+        Plotly.relayout('distributionChart', getChartLayout('Cluster Distribution'));
+    }
+    
+    // Update heatmap if it exists
+    if (heatmapDiv && heatmapDiv.data) {
+        Plotly.relayout('correlationHeatmap', getChartLayout('Feature Correlation Heatmap'));
+    }
+}
 
 // Global state
 let fileSelected = false;
@@ -615,12 +642,37 @@ async function loadVisualizations() {
         const vizData = await vizResponse.json();
 
         if (vizData.success) {
-            Plotly.newPlot('scatterPlot', vizData.scatter_chart.data, vizData.scatter_chart.layout);
-            Plotly.newPlot('distributionChart', vizData.distribution_chart.data, vizData.distribution_chart.layout);
+            // Apply theme-aware configuration to scatter chart
+            const scatterLayout = {
+                ...vizData.scatter_chart.layout,
+                ...getChartLayout(
+                    vizData.scatter_chart.layout.title?.text || 'Customer Segments Visualization',
+                    vizData.scatter_chart.layout.xaxis?.title || 'Feature 1',
+                    vizData.scatter_chart.layout.yaxis?.title || 'Feature 2'
+                )
+            };
+            
+            // Apply theme-aware configuration to distribution chart
+            const distLayout = {
+                ...vizData.distribution_chart.layout,
+                ...getChartLayout(
+                    vizData.distribution_chart.layout.title?.text || 'Cluster Distribution',
+                    'Cluster ID',
+                    'Number of Customers'
+                )
+            };
+            
+            Plotly.newPlot('scatterPlot', vizData.scatter_chart.data, scatterLayout, {responsive: true});
+            Plotly.newPlot('distributionChart', vizData.distribution_chart.data, distLayout, {responsive: true});
         } else {
+            // Show placeholder message
+            scatterPlot.innerHTML = '<div class="chart-placeholder"><i class="fas fa-chart-scatter fa-3x"></i><p>Run clustering analysis to see customer segments visualization</p></div>';
+            distributionChart.innerHTML = '<div class="chart-placeholder"><i class="fas fa-chart-bar fa-3x"></i><p>Cluster distribution will appear after analysis</p></div>';
             showToast(vizData.error || 'No visualizations available yet.', 'warning');
         }
     } catch (error) {
+        scatterPlot.innerHTML = '<div class="chart-placeholder"><i class="fas fa-exclamation-triangle fa-3x"></i><p>Unable to load visualization</p></div>';
+        distributionChart.innerHTML = '<div class="chart-placeholder"><i class="fas fa-exclamation-triangle fa-3x"></i><p>Unable to load chart</p></div>';
         showToast(`Visualization error: ${error.message}`, 'error');
     }
 }
@@ -636,7 +688,7 @@ async function loadCorrelationHeatmap() {
         const data = await response.json();
 
         if (!data.success) {
-            heatmapEl.innerHTML = '<p class="text-muted">Correlation heatmap will appear after data upload.</p>';
+            heatmapEl.innerHTML = '<div class="chart-placeholder"><i class="fas fa-th-large fa-3x"></i><p>Correlation heatmap will appear after data upload</p></div>';
             return;
         }
 
@@ -645,23 +697,34 @@ async function loadCorrelationHeatmap() {
             x: data.features,
             y: data.features,
             type: 'heatmap',
-            colorscale: 'Blues',
+                colorscale: [
+                    [0, 'rgb(255,245,240)'],
+                    [0.25, 'rgb(252,174,145)'],
+                    [0.5, 'rgb(251,106,74)'],
+                    [0.75, 'rgb(222,45,38)'],
+                    [1, 'rgb(165,15,21)']
+                ],
             showscale: true,
-            hoverongaps: false
+            hoverongaps: false,
+                hovertemplate: '<b>%{y}</b> vs <b>%{x}</b><br>Correlation: %{z:.3f}<extra></extra>',
+                text: data.matrix.map(row => row.map(val => val.toFixed(2))),
+                texttemplate: '%{text}',
+                textfont: {
+                    size: 10,
+                    color: 'white'
+                }
         };
 
-        const layout = {
-            title: 'Feature Correlation Heatmap',
-            xaxis: { title: 'Features' },
-            yaxis: { title: 'Features' },
-            margin: { l: 70, r: 20, t: 40, b: 70 },
-            paper_bgcolor: 'white',
-            plot_bgcolor: 'rgba(240, 240, 240, 0.9)'
-        };
+        const layout = getChartLayout('Feature Correlation Heatmap', 'Features', 'Features');
+        layout.margin = { l: 120, r: 20, t: 60, b: 120 };
+        layout.xaxis.tickangle = -45;
+        layout.yaxis.autorange = 'reversed';
+            layout.height = Math.max(500, data.features.length * 50);
+            layout.width = Math.max(600, data.features.length * 50);
 
-        Plotly.newPlot('correlationHeatmap', [trace], layout);
+        Plotly.newPlot('correlationHeatmap', [trace], layout, {responsive: true});
     } catch (error) {
-        heatmapEl.innerHTML = '<p class="text-muted">Unable to load correlation heatmap.</p>';
+        heatmapEl.innerHTML = '<div class="chart-placeholder"><i class="fas fa-exclamation-triangle fa-3x"></i><p>Unable to load correlation heatmap</p></div>';
         showToast(`Correlation heatmap error: ${error.message}`, 'error');
     }
 }
