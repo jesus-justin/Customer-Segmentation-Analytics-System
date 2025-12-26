@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Navbar scroll effect
     const navbar = document.querySelector('.landing-nav');
+    const scrollToTopBtn = document.getElementById('scrollToTop');
     let lastScroll = 0;
     
     window.addEventListener('scroll', function() {
@@ -83,9 +84,28 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             navbar.classList.remove('scrolled');
         }
+
+        // Show/hide scroll to top button
+        if (scrollToTopBtn) {
+            if (currentScroll > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        }
         
         lastScroll = currentScroll;
     });
+
+    // Scroll to top functionality
+    if (scrollToTopBtn) {
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 
     // Animate elements on scroll
     const observerOptions = {
