@@ -41,17 +41,32 @@ import plotly.express as px
 # Load environment variables
 load_dotenv()
 
-# Initialize Flask app
-app = Flask(__name__)
+# Get the base directory (project root)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+# Initialize Flask app with correct template and static folders
+app = Flask(__name__,
+            template_folder=TEMPLATE_DIR,
+            static_folder=STATIC_DIR)
+
+# Verify paths exist
+if not os.path.exists(TEMPLATE_DIR):
+    raise RuntimeError(f"Template directory not found: {TEMPLATE_DIR}")
+if not os.path.exists(STATIC_DIR):
+    raise RuntimeError(f"Static directory not found: {STATIC_DIR}")
 
 # Configuration from environment variables
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
-app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', 'data')
+app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, os.getenv('UPLOAD_FOLDER', 'data'))
 app.config['MAX_CONTENT_LENGTH'] = int(os.getenv('MAX_UPLOAD_SIZE', 16)) * 1024 * 1024  # Default 16MB
 app.config['JSON_SORT_KEYS'] = False
 
 # Ensure required directories exist
-for directory in [app.config['UPLOAD_FOLDER'], 'model', 'logs']:
+for directory in [app.config['UPLOAD_FOLDER'], 
+                  os.path.join(BASE_DIR, 'model'), 
+                  os.path.join(BASE_DIR, 'logs')]:
     os.makedirs(directory, exist_ok=True)
 
 app_logger.info("Application initialized")
@@ -333,7 +348,7 @@ def visualizations():
         
         # Create a copy with cluster labels
         viz_data = PROCESSED_DATA.copy()
-        viz_data['Cluster'] = CLUSTER_LABELS
+        viz_data['Cluster'] = CLUSTER_LABELS.astype(str)  # Convert to string for categorical coloring
         
         # Get first two features for 2D visualization
         features = [col for col in PROCESSED_DATA.columns if col not in ['CustomerID']][:2]
@@ -349,7 +364,17 @@ def visualizations():
             color='Cluster',
             title='Customer Segments Visualization',
             labels={'Cluster': 'Cluster ID'},
-            color_continuous_scale='Viridis'
+            color_discrete_sequence=['#636EFA', '#EF553B', '#00CC96', '#AB63FA', '#FFA15A', '#19D3F3', '#FF6692', '#B6E880', '#FF97FF', '#FECB52']
+        )
+        
+        # Update scatter markers to be more visible
+        fig.update_traces(
+            marker=dict(
+                size=10,
+                line=dict(width=1, color='white'),
+                opacity=0.8
+            ),
+            selector=dict(mode='markers')
         )
         
         fig.update_layout(
@@ -365,11 +390,18 @@ def visualizations():
         
         # Create cluster distribution chart
         cluster_counts = pd.Series(CLUSTER_LABELS).value_counts().sort_index()
+        
         fig_dist = go.Figure(data=[
             go.Bar(
-                x=cluster_counts.index,
-                y=cluster_counts.values,
-                marker_color=['#636EFA', '#EF553B', '#00CC96', '#AB63FA', '#FFA15A'][:len(cluster_counts)]
+                x=cluster_counts.index.astype(str),
+                y=cluster_counts.values.tolist(),
+                marker=dict(
+                    color=['#636EFA', '#EF553B', '#00CC96', '#AB63FA', '#FFA15A', '#19D3F3', '#FF6692', '#B6E880', '#FF97FF', '#FECB52'][:len(cluster_counts)],
+                    line=dict(color='white', width=2)
+                ),
+                text=cluster_counts.values.tolist(),
+                textposition='outside',
+                hovertemplate='Cluster %{x}<br>Count: %{y}<extra></extra>'
             )
         ])
         
@@ -542,6 +574,13 @@ def home():
     """
     app_logger.info("Landing page accessed")
     return render_template('home.html')
+
+
+@app.route('/get-started')
+def get_started():
+    """Redirect helper for Get Started CTA."""
+    app_logger.info("Get Started redirect triggered")
+    return redirect(url_for('index'))
 
 
 @app.route('/analytics')
