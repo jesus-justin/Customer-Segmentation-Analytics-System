@@ -3,23 +3,32 @@
  * Smooth scrolling, animations, and interactive elements
  */
 
-// Preloader
-window.addEventListener('load', function() {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
+// Preloader (trim delay so the page shows faster)
+const preloader = document.getElementById('preloader');
+const hidePreloader = (delay = 0) => {
+    if (!preloader || preloader.classList.contains('hidden')) return;
+
+    const doHide = () => {
+        preloader.classList.add('hidden');
         setTimeout(() => {
-            preloader.classList.add('hidden');
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 500);
-        }, 1000);
-    }
-});
+            preloader.style.display = 'none';
+        }, 400);
+    };
+
+    return delay > 0 ? setTimeout(doHide, delay) : doHide();
+};
+
+// Hide as soon as load fires (small buffer for paint)
+window.addEventListener('load', () => hidePreloader(100));
+// Fallback: hide after 2.5s even if load is slow or blocked
+setTimeout(() => hidePreloader(), 2500);
 
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const navLinks = document.getElementById('navLinks');
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    const getStartedNav = document.getElementById('getStartedNav');
     
     if (mobileMenuToggle) {
         mobileMenuToggle.addEventListener('click', function() {
@@ -51,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Smooth scrolling for navigation links
-    const navLinks = document.querySelectorAll('a[href^="#"]');
-    navLinks.forEach(link => {
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    anchorLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
@@ -290,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        navLinks.forEach(link => {
+        anchorLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === '#' + current) {
                 link.classList.add('active');
