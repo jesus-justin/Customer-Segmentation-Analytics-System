@@ -173,17 +173,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add parallax effect to hero orbs
+    let ticking = false;
     window.addEventListener('mousemove', function(e) {
-        const orbs = document.querySelectorAll('.gradient-orb');
-        const mouseX = e.clientX / window.innerWidth;
-        const mouseY = e.clientY / window.innerHeight;
-        
-        orbs.forEach((orb, index) => {
-            const speed = (index + 1) * 20;
-            const x = (mouseX - 0.5) * speed;
-            const y = (mouseY - 0.5) * speed;
-            orb.style.transform = `translate(${x}px, ${y}px)`;
-        });
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                const orbs = document.querySelectorAll('.gradient-orb');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                orbs.forEach((orb, index) => {
+                    const speed = (index + 1) * 20;
+                    const x = (mouseX - 0.5) * speed;
+                    const y = (mouseY - 0.5) * speed;
+                    orb.style.transform = `translate(${x}px, ${y}px)`;
+                });
+                
+                ticking = false;
+            });
+            
+            ticking = true;
+        }
     });
 
     // Add pulse animation to preview cards
