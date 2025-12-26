@@ -389,5 +389,31 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(typeWriter, 500);
     }
 
+    // Add progress bar for page scroll
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+
+    window.addEventListener('scroll', function() {
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (window.pageYOffset / windowHeight) * 100;
+        progressBar.style.width = scrolled + '%';
+    });
+
+    // Add CSS for scroll progress bar
+    const progressStyle = document.createElement('style');
+    progressStyle.textContent = `
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), #9333ea);
+            z-index: 10000;
+            transition: width 0.1s ease;
+        }
+    `;
+    document.head.appendChild(progressStyle);
+
     console.log('Landing page initialized successfully!');
 });
