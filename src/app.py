@@ -536,11 +536,20 @@ def reset():
 
 
 @app.route('/')
+def home():
+    """
+    Landing page with overview and features.
+    """
+    app_logger.info("Landing page accessed")
+    return render_template('home.html')
+
+
+@app.route('/analytics')
 def index():
     """
-    Home page with file upload interface.
+    Analytics dashboard with file upload interface.
     """
-    app_logger.info("Home page accessed")
+    app_logger.info("Analytics dashboard accessed")
     return render_template('index.html')
 
 
