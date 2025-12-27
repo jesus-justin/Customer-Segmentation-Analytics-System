@@ -127,6 +127,7 @@ const resetBtn = getEl('resetBtn');
 const loadingSpinner = getEl('loadingSpinner');
 const loadingText = getEl('loadingText');
 const toast = getEl('toast');
+const sampleBtnId = 'loadSampleBtn';
 
 const safeListen = (el, event, handler) => {
     if (!el) {
@@ -135,6 +136,37 @@ const safeListen = (el, event, handler) => {
     el.addEventListener(event, handler);
     return true;
 };
+
+// Add Load Sample button if upload area is present
+if (uploadArea && !document.getElementById(sampleBtnId)) {
+    const btn = document.createElement('button');
+    btn.id = sampleBtnId;
+    btn.className = 'btn btn-secondary';
+    btn.style.marginTop = '10px';
+    btn.innerHTML = '<i class="fas fa-database"></i> Load Sample Dataset';
+    uploadArea.parentElement.appendChild(btn);
+    btn.addEventListener('click', async function(){
+        showLoading(true, 'Loading sample dataset...');
+        try {
+            const res = await fetch('/api/sample-data', { method: 'POST' });
+            const data = await res.json();
+            if (data.success) {
+                dataLoaded = true;
+                findOptimalBtn && (findOptimalBtn.disabled = false);
+                clusterBtn && (clusterBtn.disabled = false);
+                // Display basic stats
+                displayDataStats({ Age: { count: data.shape[0] } }, data.features || []);
+                showToast('Sample dataset loaded', 'success');
+            } else {
+                showToast(data.error || 'Failed to load sample dataset', 'error');
+            }
+        } catch (e) {
+            showToast('Network error while loading sample', 'error');
+        } finally {
+            showLoading(false);
+        }
+    });
+}
 
 // File Upload Handling (only binds on pages that have upload elements)
 safeListen(uploadArea, 'click', () => fileInput && fileInput.click());

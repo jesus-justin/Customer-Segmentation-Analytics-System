@@ -1,3 +1,12 @@
+# What's New (Dec 2025)
+
+- Persistent analysis state with joblib; auto-restore on startup
+- `/api/status` and `/api/save-state` endpoints for operations
+- `/api/feature-importance` endpoint for insights
+- Sample dataset loader and UI button
+- Friendly HTML 404 page for browsers
+- CI workflow to run tests on push/PR
+- Dependency verification aligned with requirements
 # 🎉 What's New - Recent Enhancements (v1.1.0)
 
 ## December 2025 Update

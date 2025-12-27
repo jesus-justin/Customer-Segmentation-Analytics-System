@@ -1,4 +1,22 @@
 # 📊 Customer Segmentation Analytics System
+## 🔧 Recent Enhancements (Dec 2025)
+- Persistent analysis state restored automatically on startup
+- New `/api/status` endpoint for quick health/readiness checks
+- New `/api/feature-importance` endpoint for importance scores and summaries
+- Added "Load Sample Dataset" for fast demo without manual upload
+- Friendly 404 page for browser requests (JSON unchanged for APIs)
+- Dependency verification aligned with pinned requirements
+
+### Quick Start (Windows)
+```powershell
+python -m pip install -r config\requirements.txt
+python src\app.py
+```
+
+Auto-start at user logon:
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File config\windows\register-startup-task.ps1
+```
 
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)](https://github.com)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)

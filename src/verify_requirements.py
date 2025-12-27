@@ -9,14 +9,14 @@ import importlib
 from packaging import version
 
 REQUIRED_PACKAGES = {
-    'flask': '2.3.0',
-    'pandas': '2.0.0',
-    'numpy': '1.24.0',
+    'flask': '2.3.3',
+    'pandas': '2.0.3',
+    'numpy': '1.24.3',
     'sklearn': '1.3.0',  # scikit-learn
-    'plotly': '5.16.0',
+    'plotly': '5.16.1',
     'dotenv': '1.0.0',  # python-dotenv
-    'werkzeug': '2.3.0',
-    'joblib': '1.3.0',
+    'werkzeug': '2.3.7',
+    'joblib': '1.3.1',
 }
 
 # Mapping for import names that differ from package names

@@ -9,12 +9,17 @@ Last Updated: 2024
 
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 import os
+import sys
 import json
 import time
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 import pandas as pd
 import numpy as np
+# Get the base directory (project root) early and ensure absolute imports work
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
 from utils.preprocessing import preprocess_data, get_feature_statistics, get_data_quality_metrics, get_correlation_matrix
 from utils.clustering import (
     find_optimal_clusters,
@@ -33,6 +38,7 @@ from utils.feature_importance import (
     generate_cluster_summary
 )
 from utils.export import export_to_csv, export_to_json, export_html_report
+from utils.state import save_state, load_state
 from utils.logger import app_logger
 import plotly
 import plotly.graph_objs as go
@@ -41,8 +47,6 @@ import plotly.express as px
 # Load environment variables
 load_dotenv()
 
-# Get the base directory (project root)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
@@ -77,6 +81,16 @@ ORIGINAL_DATA = None
 CLUSTER_LABELS = None
 KMEANS_MODEL = None
 METADATA = None
+
+# Attempt to restore previous state on startup
+_loaded = load_state()
+if _loaded:
+    PROCESSED_DATA = _loaded.get('PROCESSED_DATA')
+    ORIGINAL_DATA = _loaded.get('ORIGINAL_DATA')
+    CLUSTER_LABELS = _loaded.get('CLUSTER_LABELS')
+    KMEANS_MODEL = _loaded.get('KMEANS_MODEL')
+    METADATA = _loaded.get('METADATA')
+    app_logger.info("Previous analysis state restored from disk")
 
 
 @app.route('/api/upload', methods=['POST'])
@@ -473,6 +487,36 @@ def get_cluster_data():
         return jsonify({'error': f'Error retrieving data: {str(e)}'}), 500
 
 
+@app.route('/api/feature-importance', methods=['GET'])
+def feature_importance_api():
+    """Expose feature importance and top features via API."""
+    try:
+        if CLUSTER_LABELS is None:
+            return jsonify({'error': 'No clustering performed'}), 400
+        scores = calculate_feature_importance_in_clusters(PROCESSED_DATA, ORIGINAL_DATA, CLUSTER_LABELS)
+        top = get_top_features_per_cluster(ORIGINAL_DATA, CLUSTER_LABELS, n_features=5)
+        summaries = generate_cluster_summary(ORIGINAL_DATA, PROCESSED_DATA, CLUSTER_LABELS, KMEANS_MODEL)
+        return jsonify({'success': True, 'importance_scores': scores, 'top_features': top, 'summaries': summaries}), 200
+    except Exception as e:
+        app_logger.error(f"Feature importance API error: {str(e)}", exc_info=True)
+        return jsonify({'error': f'Error: {str(e)}'}), 500
+
+
+@app.route('/api/sample-data', methods=['POST'])
+def load_sample_data():
+    """Load a bundled sample CSV to quickly demo the app."""
+    try:
+        sample_path = os.path.join(BASE_DIR, 'data', 'sample_customers.csv')
+        if not os.path.exists(sample_path):
+            return jsonify({'error': 'Sample dataset not found'}), 404
+        global PROCESSED_DATA, ORIGINAL_DATA, METADATA
+        PROCESSED_DATA, METADATA, ORIGINAL_DATA = preprocess_data(sample_path)
+        return jsonify({'success': True, 'shape': list(PROCESSED_DATA.shape), 'features': METADATA.get('features', [])}), 200
+    except Exception as e:
+        app_logger.error(f"Sample data load error: {str(e)}", exc_info=True)
+        return jsonify({'error': f'Error: {str(e)}'}), 500
+
+
 @app.route('/results')
 def results():
     """
@@ -538,6 +582,35 @@ def export_results():
     except Exception as e:
         app_logger.error(f"Export error: {str(e)}", exc_info=True)
         return jsonify({'error': f'Export error: {str(e)}'}), 500
+
+
+@app.route('/api/status', methods=['GET'])
+def status():
+    """Return current application analysis status."""
+    return jsonify({
+        'data_loaded': ORIGINAL_DATA is not None,
+        'processed_rows': int(len(PROCESSED_DATA)) if PROCESSED_DATA is not None else 0,
+        'clusters_performed': CLUSTER_LABELS is not None,
+        'n_clusters': int(len(np.unique(CLUSTER_LABELS))) if CLUSTER_LABELS is not None else 0
+    }), 200
+
+
+@app.route('/api/save-state', methods=['POST'])
+def save_app_state():
+    """Persist current analysis state to disk."""
+    try:
+        state = {
+            'PROCESSED_DATA': PROCESSED_DATA,
+            'ORIGINAL_DATA': ORIGINAL_DATA,
+            'CLUSTER_LABELS': CLUSTER_LABELS,
+            'KMEANS_MODEL': KMEANS_MODEL,
+            'METADATA': METADATA,
+        }
+        path = save_state(state)
+        return jsonify({'success': True, 'path': path}), 200
+    except Exception as e:
+        app_logger.error(f"Save state error: {str(e)}", exc_info=True)
+        return jsonify({'error': f'Save state error: {str(e)}'}), 500
 
 
 @app.route('/api/reset', methods=['POST'])
@@ -611,6 +684,13 @@ def not_found(error):
         JSON error response
     """
     app_logger.warning(f"404 error: {request.path}")
+    # Render HTML if client prefers text/html
+    accept = request.headers.get('Accept', '')
+    if 'text/html' in accept:
+        try:
+            return render_template('not_found.html'), 404
+        except Exception:
+            pass
     return jsonify({'error': 'Resource not found'}), 404
 
 
