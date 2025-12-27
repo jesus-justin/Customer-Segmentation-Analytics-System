@@ -127,6 +127,9 @@ const resetBtn = getEl('resetBtn');
 const loadingSpinner = getEl('loadingSpinner');
 const loadingText = getEl('loadingText');
 const toast = getEl('toast');
+    const stateHistory = getEl('stateHistory');
+    const restoreStateBtn = getEl('restoreStateBtn');
+    const saveStateBtn = getEl('saveStateBtn');
 const sampleBtnId = 'loadSampleBtn';
 
 const safeListen = (el, event, handler) => {
@@ -530,7 +533,83 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.location.pathname === '/results') {
         loadResultsData();
     }
+
+    // Fetch recent analysis metadata if section exists
+    if (stateHistory) {
+        loadStateHistory();
+        safeListen(restoreStateBtn, 'click', restoreState);
+        safeListen(saveStateBtn, 'click', saveStateNow);
+    }
 });
+
+async function loadStateHistory() {
+    const container = getEl('stateHistory');
+    if (!container) return;
+    try {
+        const res = await fetch('/api/state-history');
+        const data = await res.json();
+        if (!data.success || !data.history || data.history.length === 0) {
+            container.innerHTML = '<p class="text-muted">No saved analysis found yet.</p>';
+            return;
+        }
+        const items = data.history.map((h) => {
+            const sizeMb = (h.size_bytes / (1024 * 1024)).toFixed(2);
+            return `<div class="history-row">
+                <div>
+                    <div class="history-label">Last saved</div>
+                    <div class="history-value">${h.last_modified}</div>
+                </div>
+                <div class="history-meta">${sizeMb} MB</div>
+            </div>`;
+        }).join('');
+        container.innerHTML = items;
+        // Re-attach actions if re-rendered
+        const restoreBtn = document.getElementById('restoreStateBtn');
+        const saveBtn = document.getElementById('saveStateBtn');
+        safeListen(restoreBtn, 'click', restoreState);
+        safeListen(saveBtn, 'click', saveStateNow);
+    } catch (e) {
+        container.innerHTML = '<p class="text-muted">Could not load recent analysis.</p>';
+    }
+}
+
+async function restoreState() {
+    showLoading(true, 'Restoring last analysis...');
+    try {
+        const res = await fetch('/api/load-state', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+            showToast('State restored. You can view results or rerun clustering.', 'success');
+            // Enable downstream actions
+            findOptimalBtn && (findOptimalBtn.disabled = false);
+            clusterBtn && (clusterBtn.disabled = false);
+        } else {
+            showToast(data.message || data.error || 'No saved state found', 'warning');
+        }
+    } catch (e) {
+        showToast('Failed to restore state', 'error');
+    } finally {
+        showLoading(false);
+    }
+}
+
+async function saveStateNow() {
+    showLoading(true, 'Saving current analysis...');
+    try {
+        const res = await fetch('/api/save-state', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+            showToast('Analysis saved', 'success');
+            loadStateHistory();
+        } else {
+            showToast(data.error || 'Save failed', 'error');
+        }
+    } catch (e) {
+        showToast('Save request failed', 'error');
+    } finally {
+        showLoading(false);
+    }
+}
 
 async function loadResultsData() {
     showLoading(true, 'Generating visualizations...');

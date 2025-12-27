@@ -38,7 +38,7 @@ from utils.feature_importance import (
     generate_cluster_summary
 )
 from utils.export import export_to_csv, export_to_json, export_html_report
-from utils.state import save_state, load_state
+from utils.state import save_state, load_state, get_state_history
 from utils.logger import app_logger
 import plotly
 import plotly.graph_objs as go
@@ -613,6 +613,32 @@ def save_app_state():
         return jsonify({'error': f'Save state error: {str(e)}'}), 500
 
 
+@app.route('/api/load-state', methods=['POST'])
+def load_app_state():
+    """Load persisted analysis state into memory."""
+    try:
+        global PROCESSED_DATA, ORIGINAL_DATA, CLUSTER_LABELS, KMEANS_MODEL, METADATA
+        state = load_state()
+        if not state:
+            return jsonify({'success': False, 'message': 'No saved state found'}), 404
+        PROCESSED_DATA = state.get('PROCESSED_DATA')
+        ORIGINAL_DATA = state.get('ORIGINAL_DATA')
+        CLUSTER_LABELS = state.get('CLUSTER_LABELS')
+        KMEANS_MODEL = state.get('KMEANS_MODEL')
+        METADATA = state.get('METADATA')
+        return jsonify({'success': True, 'message': 'State restored'}), 200
+    except Exception as e:
+        app_logger.error(f"Load state error: {str(e)}", exc_info=True)
+        return jsonify({'error': f'Load state error: {str(e)}'}), 500
+
+
+@app.route('/api/state-history', methods=['GET'])
+def state_history():
+    """Return metadata about saved analysis states."""
+    history = get_state_history()
+    return jsonify({'success': True, 'history': history}), 200
+
+
 @app.route('/api/reset', methods=['POST'])
 def reset():
     """
@@ -651,9 +677,9 @@ def home():
 
 @app.route('/get-started')
 def get_started():
-    """Redirect helper for Get Started CTA."""
-    app_logger.info("Get Started redirect triggered")
-    return redirect(url_for('index'))
+    """Render the onboarding page with quick steps and links."""
+    app_logger.info("Get Started page accessed")
+    return render_template('get-started.html')
 
 
 @app.route('/analytics')

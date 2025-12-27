@@ -69,7 +69,7 @@
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#how-it-works" class="nav-link">How It Works</a>
                 <a href="#benefits" class="nav-link">Benefits</a>
-                <a href="/Customer-Segmentation-Analytics-System/pages/getting-started.html" class="btn-nav-primary" id="getStartedNav">
+                <a href="{{ url_for('get_started') }}" class="btn-nav-primary" id="getStartedNav">
                     <i class="fas fa-rocket"></i> Get Started
                 </a>
             </div>
@@ -99,7 +99,7 @@
                     identify patterns, and drive targeted business strategies with precision.
                 </p>
                 <div class="hero-cta">
-                    <a href="/Customer-Segmentation-Analytics-System/pages/getting-started.html" class="btn-hero-primary" id="getStartedBtn">
+                    <a href="{{ url_for('get_started') }}" class="btn-hero-primary" id="getStartedBtn">
                         <i class="fas fa-play-circle"></i>
                         Start Analyzing Now
                     </a>
@@ -301,6 +301,46 @@
                             <div class="metric-label">Cost Reduction</div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operations Section -->
+    <section class="features-section" style="background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 70%);">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Operational Readiness</h2>
+                <p class="section-subtitle">Keep the dashboard reliable with built-in health, persistence, and quick-start helpers</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon icon-blue">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Health & Status APIs</h3>
+                    <p>Monitor uptime with `/health` and `/api/status` to confirm data load, clusters, and readiness.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-green">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Sample Dataset Loader</h3>
+                    <p>Demo instantly via the “Load Sample Dataset” button or call `/api/sample-data` for scripted runs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-purple">
+                        <i class="fas fa-save"></i>
+                    </div>
+                    <h3>State Resume</h3>
+                    <p>Analysis state auto-restores on restart and can be saved on-demand with `/api/save-state`.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-orange">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <h3>Auto-start on Login</h3>
+                    <p>Use the Windows script in `config/windows/register-startup-task.ps1` to launch the app after reboot.</p>
                 </div>
             </div>
         </div>

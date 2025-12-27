@@ -26,6 +26,24 @@ class ApiTestCase(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertIn(b'Customer Segmentation Analytics System', rv.data)
 
+    def test_get_started_page(self):
+        rv = self.client.get('/get-started', headers={'Accept': 'text/html'})
+        self.assertEqual(rv.status_code, 200)
+        self.assertIn(b'Get Started in Minutes', rv.data)
+
+    def test_state_history(self):
+        rv = self.client.get('/api/state-history')
+        self.assertEqual(rv.status_code, 200)
+        data = rv.get_json()
+        self.assertTrue(data.get('success'))
+        self.assertIn('history', data)
+
+    def test_load_state_endpoint(self):
+        rv = self.client.post('/api/load-state')
+        self.assertIn(rv.status_code, (200, 404))
+        data = rv.get_json()
+        self.assertIn('success', data)
+
     def test_404_html(self):
         rv = self.client.get('/nonexistent', headers={'Accept': 'text/html'})
         self.assertEqual(rv.status_code, 404)

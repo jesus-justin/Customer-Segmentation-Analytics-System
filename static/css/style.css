@@ -1027,6 +1027,39 @@ body > * {
     margin: 1rem 0;
 }
 
+.history-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.history-row:last-child {
+    border-bottom: none;
+}
+
+.history-label {
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.history-value {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.history-meta {
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.history-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
 .cluster-stat {
     background: white;
     padding: 0.75rem;

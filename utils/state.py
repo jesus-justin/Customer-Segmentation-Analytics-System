@@ -1,6 +1,7 @@
 import os
 import joblib
-from typing import Any, Dict
+from datetime import datetime
+from typing import Any, Dict, List
 
 
 STATE_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'model', 'app_state.pkl')
@@ -19,3 +20,19 @@ def load_state(path: str = STATE_FILE) -> Dict[str, Any]:
         except Exception:
             return {}
     return {}
+
+
+def get_state_history(path: str = STATE_FILE) -> List[Dict[str, Any]]:
+    """Return simple metadata about saved analysis state."""
+    if not os.path.exists(path):
+        return []
+    try:
+        mtime = datetime.fromtimestamp(os.path.getmtime(path)).isoformat()
+        size_bytes = os.path.getsize(path)
+        return [{
+            'path': path,
+            'last_modified': mtime,
+            'size_bytes': size_bytes
+        }]
+    except Exception:
+        return []

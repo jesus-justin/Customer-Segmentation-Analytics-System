@@ -199,6 +199,27 @@ python app.py
 - Layout and spacing
 - Font styles
 
+---
+
+## Operations & Auto-start
+
+### Health and Status
+- `GET /health` — basic health probe
+- `GET /api/status` — shows whether data is loaded and clusters are ready
+
+### Save/Restore Analysis
+- `POST /api/save-state` — persist current analysis; state auto-loads on restart
+
+### Sample Dataset
+- `POST /api/sample-data` — loads the bundled sample data for demos
+
+### Windows Auto-start (login)
+Run in PowerShell:
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File config\windows\register-startup-task.ps1
+```
+This registers a Scheduled Task that launches the app after you log in. Use `config\windows\start_app.ps1` to launch immediately and add the firewall rule if needed.
+
 ## Next Steps
 
 1. **Customize Content**: Update text to match your branding
