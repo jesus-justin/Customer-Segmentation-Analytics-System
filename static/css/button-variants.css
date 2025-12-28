@@ -1,0 +1,27 @@
+/* CSS Enhancement: Button Variants */
+.btn-outline {
+    border: 2px solid #2563eb;
+    color: #2563eb;
+    background: transparent;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #2563eb;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+}
+
+.btn-ghost:hover {
+    background: rgba(37, 99, 235, 0.1);
+}
