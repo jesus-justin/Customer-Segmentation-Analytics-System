@@ -130,13 +130,13 @@
                         <div class="preview-text">Customer Segments</div>
                         <div class="preview-graph"></div>
                     </div>
-                    <div class="preview-card card-2">
-                        <div class="preview-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="preview-card card-2" data-tooltip="Real-time Analytics Dashboard" role="img" aria-label="Real-time analytics visualization">
+                        <div class="preview-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
                         <div class="preview-text">Real-time Analytics</div>
                         <div class="preview-chart"></div>
                     </div>
-                    <div class="preview-card card-3">
-                        <div class="preview-icon"><i class="fas fa-brain"></i></div>
+                    <div class="preview-card card-3" data-enhance="true">
+                        <div class="preview-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
                         <div class="preview-text">ML Insights</div>
                         <div class="preview-pulse"></div>
                     </div>
@@ -145,8 +145,8 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features-section">
+    <!-- Features Section (Enhanced) -->
+    <section id="features" class="features-section" role="region" aria-label="Platform Features">
         <div class="section-container">
             <div class="section-header">
                 <h2 class="section-title">Powerful Features for Deep Customer Understanding</h2>
@@ -445,6 +445,41 @@
             });
         })();
     </script>
-    {% endraw %}
-</body>
-</html>
+    
+    <!-- HTML Enhancement: Accessibility & SEO Improvements -->
+    <script>
+        // Enhancement 1: Add semantic landmarks
+        document.addEventListener('DOMContentLoaded', () => {
+            // Enhancement 2: Add ARIA labels for accessibility
+            const mainContent = document.querySelector('main') || document.body;
+            mainContent.setAttribute('role', 'main');
+            
+            // Enhancement 3: Add data attributes for tracking
+            document.querySelectorAll('[data-enhance]').forEach(el => {
+                el.setAttribute('data-enhancement-level', 'high');
+            });
+            
+            // Enhancement 4: Add tooltip system
+            document.querySelectorAll('[data-tooltip]').forEach(el => {
+                const tooltip = el.getAttribute('data-tooltip');
+                el.setAttribute('aria-label', tooltip);
+                el.setAttribute('title', tooltip);
+            });
+            
+            // Enhancement 5: Breadcrumb navigation support
+            const breadcrumbData = window.breadcrumbPath || [];
+            if (breadcrumbData.length > 0) {
+                const breadcrumb = document.querySelector('.breadcrumb');
+                if (breadcrumb) {
+                    breadcrumbData.forEach((item, index) => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.href = item.url;
+                        a.textContent = item.label;
+                        li.appendChild(a);
+                        breadcrumb.appendChild(li);
+                    });
+                }
+            }
+        });
+    </script>

@@ -866,3 +866,309 @@ document.addEventListener('submit', (e) => {
         e.preventDefault();
     }
 });
+/* ============================================
+   JS Enhancement 1: Smooth Scroll Behavior
+   ============================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    });
+});
+
+/* ============================================
+   JS Enhancement 2: Form Validation Utilities
+   ============================================ */
+const FormValidator = {
+    email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+    phone: (value) => /^[\d\s\-\+\(\)]+$/.test(value),
+    url: (value) => {
+        try {
+            new URL(value);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+    required: (value) => value && value.trim().length > 0,
+    minLength: (value, length) => value && value.length >= length,
+    maxLength: (value, length) => value && value.length <= length,
+    validateForm: function(formElement) {
+        const errors = {};
+        formElement.querySelectorAll('[data-validate]').forEach(field => {
+            const validationType = field.dataset.validate;
+            if (this[validationType] && !this[validationType](field.value)) {
+                errors[field.name] = `Invalid ${validationType}`;
+            }
+        });
+        return errors;
+    }
+};
+
+/* ============================================
+   JS Enhancement 3: Animation Utilities
+   ============================================ */
+const AnimationUtils = {
+    fadeIn: (element, duration = 300) => {
+        element.style.opacity = '0';
+        element.style.transition = `opacity ${duration}ms ease-in`;
+        setTimeout(() => {
+            element.style.opacity = '1';
+        }, 10);
+    },
+    slideUp: (element, duration = 300) => {
+        element.style.transform = 'translateY(20px)';
+        element.style.opacity = '0';
+        element.style.transition = `all ${duration}ms ease-out`;
+        setTimeout(() => {
+            element.style.transform = 'translateY(0)';
+            element.style.opacity = '1';
+        }, 10);
+    },
+    pulse: (element) => {
+        element.classList.add('animate-pulse');
+        setTimeout(() => element.classList.remove('animate-pulse'), 2000);
+    },
+    bounce: (element) => {
+        element.style.animation = 'bounce 0.6s';
+        setTimeout(() => element.style.animation = '', 600);
+    }
+};
+
+/* ============================================
+   JS Enhancement 4: Event Delegation System
+   ============================================ */
+const EventManager = {
+    handlers: new Map(),
+    on: function(selector, eventType, callback) {
+        document.addEventListener(eventType, (e) => {
+            if (e.target.matches(selector)) {
+                callback.call(e.target, e);
+            }
+        });
+    },
+    off: function(selector, eventType) {
+        // Note: Modern approach stores handlers for potential removal
+        const key = `${selector}-${eventType}`;
+        this.handlers.delete(key);
+    },
+    trigger: function(element, eventType) {
+        const event = new Event(eventType, { bubbles: true });
+        element.dispatchEvent(event);
+    }
+};
+
+/* ============================================
+   JS Enhancement 5: LocalStorage Integration
+   ============================================ */
+const StorageManager = {
+    set: (key, value) => {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+        } catch (e) {
+            console.warn('LocalStorage unavailable:', e);
+        }
+    },
+    get: (key, defaultValue = null) => {
+        try {
+            const item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : defaultValue;
+        } catch (e) {
+            console.warn('LocalStorage read error:', e);
+            return defaultValue;
+        }
+    },
+    remove: (key) => {
+        try {
+            localStorage.removeItem(key);
+        } catch (e) {
+            console.warn('LocalStorage delete error:', e);
+        }
+    },
+    clear: () => {
+        try {
+            localStorage.clear();
+        } catch (e) {
+            console.warn('LocalStorage clear error:', e);
+        }
+    }
+};
+
+/* ============================================
+   JS Enhancement 6: Performance Monitoring
+   ============================================ */
+const PerformanceMonitor = {
+    marks: {},
+    startMeasure: function(name) {
+        this.marks[name] = performance.now();
+    },
+    endMeasure: function(name) {
+        if (this.marks[name]) {
+            const duration = performance.now() - this.marks[name];
+            console.log(`${name}: ${duration.toFixed(2)}ms`);
+            delete this.marks[name];
+            return duration;
+        }
+    },
+    getMetrics: function() {
+        return {
+            navigation: performance.getEntriesByType('navigation')[0],
+            paints: performance.getEntriesByType('paint'),
+            resources: performance.getEntriesByType('resource').slice(0, 5)
+        };
+    }
+};
+
+/* ============================================
+   JS Enhancement 7: Tooltip System
+   ============================================ */
+const TooltipManager = {
+    init: function() {
+        document.querySelectorAll('[data-tooltip]').forEach(element => {
+            element.addEventListener('mouseenter', (e) => {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip-popup';
+                tooltip.textContent = element.dataset.tooltip;
+                document.body.appendChild(tooltip);
+                
+                const rect = element.getBoundingClientRect();
+                tooltip.style.position = 'fixed';
+                tooltip.style.top = (rect.top - tooltip.offsetHeight - 5) + 'px';
+                tooltip.style.left = (rect.left + rect.width / 2 - tooltip.offsetWidth / 2) + 'px';
+                tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                tooltip.style.color = 'white';
+                tooltip.style.padding = '8px 12px';
+                tooltip.style.borderRadius = '4px';
+                tooltip.style.fontSize = '12px';
+                tooltip.style.zIndex = '10000';
+                
+                element.tooltip = tooltip;
+            });
+            
+            element.addEventListener('mouseleave', (e) => {
+                if (element.tooltip) {
+                    element.tooltip.remove();
+                    delete element.tooltip;
+                }
+            });
+        });
+    }
+};
+
+/* ============================================
+   JS Enhancement 8: Lazy Loading System
+   ============================================ */
+const LazyLoader = {
+    init: function() {
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    }
+};
+
+/* ============================================
+   JS Enhancement 9: Keyboard Shortcuts
+   ============================================ */
+const KeyboardShortcuts = {
+    shortcuts: new Map(),
+    register: function(key, callback) {
+        this.shortcuts.set(key, callback);
+    },
+    init: function() {
+        document.addEventListener('keydown', (e) => {
+            const key = `${e.ctrlKey ? 'ctrl+' : ''}${e.key.toLowerCase()}`;
+            if (this.shortcuts.has(key)) {
+                e.preventDefault();
+                this.shortcuts.get(key)();
+            }
+        });
+    }
+};
+
+/* ============================================
+   JS Enhancement 10: Analytics Tracking
+   ============================================ */
+const Analytics = {
+    events: [],
+    trackEvent: function(category, action, label = '') {
+        const event = {
+            timestamp: new Date(),
+            category,
+            action,
+            label,
+            url: window.location.href
+        };
+        this.events.push(event);
+        // Optional: Send to analytics service
+        if (window.gtag) {
+            gtag('event', action, { event_category: category, event_label: label });
+        }
+    },
+    trackPageView: function() {
+        this.trackEvent('pageview', 'view', document.title);
+    },
+    getEvents: function() {
+        return this.events;
+    }
+};
+
+/* ============================================
+   JS Enhancement 11: Responsive Utilities
+   ============================================ */
+const ResponsiveHelper = {
+    isMobile: () => window.innerWidth < 768,
+    isTablet: () => window.innerWidth >= 768 && window.innerWidth < 1024,
+    isDesktop: () => window.innerWidth >= 1024,
+    onResize: function(callback) {
+        window.addEventListener('resize', callback);
+    }
+};
+
+/* ============================================
+   JS Enhancement 12: Filter & Sort Utilities
+   ============================================ */
+const DataUtils = {
+    filterBy: (array, key, value) => array.filter(item => item[key] === value),
+    sortBy: (array, key, order = 'asc') => {
+        return [...array].sort((a, b) => {
+            if (order === 'asc') return a[key] > b[key] ? 1 : -1;
+            return a[key] < b[key] ? 1 : -1;
+        });
+    },
+    groupBy: (array, key) => {
+        return array.reduce((acc, item) => {
+            const group = item[key];
+            if (!acc[group]) acc[group] = [];
+            acc[group].push(item);
+            return acc;
+        }, {})
+    },
+    sumBy: (array, key) => array.reduce((sum, item) => sum + (item[key] || 0), 0),
+    averageBy: (array, key) => {
+        const sum = DataUtils.sumBy(array, key);
+        return array.length > 0 ? sum / array.length : 0;
+    }
+};
