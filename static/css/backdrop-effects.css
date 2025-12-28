@@ -1,0 +1,13 @@
+/* CSS Enhancement: Backdrop Blur Effects */
+.backdrop-blur {
+    backdrop-filter: blur(8px);
+}
+
+.backdrop-blur-heavy {
+    backdrop-filter: blur(20px);
+}
+
+.overlay-dark {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
