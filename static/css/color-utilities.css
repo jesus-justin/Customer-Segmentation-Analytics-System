@@ -1,0 +1,18 @@
+/* CSS Enhancement: Color Utility Classes */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.bg-gradient-warm {
+    background: linear-gradient(135deg, #f59e0b, #dc2626);
+}
+
+.border-primary { border: 2px solid #2563eb; }
+.border-secondary { border: 2px solid #10b981; }
+.border-success { border: 2px solid #22c55e; }
+.border-warning { border: 2px solid #f59e0b; }
+.border-danger { border: 2px solid #ef4444; }
