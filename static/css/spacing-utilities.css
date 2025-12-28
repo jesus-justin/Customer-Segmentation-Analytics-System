@@ -1,0 +1,11 @@
+/* CSS Enhancement: Spacing Utilities */
+.spacing-xs { margin: 0.25rem; }
+.spacing-sm { margin: 0.5rem; }
+.spacing-md { margin: 1rem; }
+.spacing-lg { margin: 1.5rem; }
+.spacing-xl { margin: 2rem; }
+
+.px-xs { padding-left: 0.25rem; padding-right: 0.25rem; }
+.px-sm { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-md { padding-left: 1rem; padding-right: 1rem; }
+.px-lg { padding-left: 1.5rem; padding-right: 1.5rem; }
