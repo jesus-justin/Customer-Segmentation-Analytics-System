@@ -1,0 +1,38 @@
+/* Advanced CSS: Parallax Scrolling Effects */
+.parallax-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.parallax-layer {
+    position: relative;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.parallax-layer-1 {
+    background-attachment: fixed;
+    transform: translateZ(0px);
+    z-index: 1;
+}
+
+.parallax-layer-2 {
+    background-attachment: fixed;
+    transform: translateZ(-10px) scale(1.1);
+    z-index: 0;
+}
+
+.parallax-layer-3 {
+    background-attachment: fixed;
+    transform: translateZ(-20px) scale(1.2);
+    z-index: -1;
+}
+
+@supports (perspective: 1000px) {
+    .parallax-scroll {
+        perspective: 1000px;
+        perspective-origin: center center;
+    }
+}
