@@ -1,0 +1,15 @@
+/* CSS Enhancement: Focus States for Accessibility */
+.focus-ring:focus {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+.focus-ring-subtle:focus {
+    outline: 1px solid #60a5fa;
+    outline-offset: 1px;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
