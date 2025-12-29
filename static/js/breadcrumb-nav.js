@@ -1,3 +1,8 @@
+/**
+ * breadcrumb-nav.js
+ * Enhanced with better documentation
+ * Last updated: 2025-12-29
+ */
 <!-- HTML Enhancement: Breadcrumb Navigation Support -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -22,3 +27,4 @@
         }
     });
 </script>
+
