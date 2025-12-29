@@ -1,3 +1,8 @@
+/**
+ * analytics-tracker.js
+ * Enhanced with better documentation
+ * Last updated: 2025-12-29
+ */
 <!-- JS Enhancement: Analytics Tracking -->
 <script>
     const Analytics = {
@@ -27,3 +32,4 @@
         Analytics.trackPageView();
     });
 </script>
+
