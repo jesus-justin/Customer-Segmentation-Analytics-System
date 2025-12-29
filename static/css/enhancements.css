@@ -1,3 +1,8 @@
+/**
+ * enhancements.css
+ * Stylesheet with enhanced styling
+ * Last updated: 2025-12-29
+ */
 /* Additional Visual Enhancements */
 
 /* Enhanced Upload Area */
@@ -201,3 +206,4 @@ a:focus, button:focus, input:focus, .btn:focus {
         border: 1px solid #ddd;
     }
 }
+
