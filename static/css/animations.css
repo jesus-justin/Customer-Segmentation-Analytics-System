@@ -1,3 +1,8 @@
+/**
+ * animations.css
+ * Stylesheet with enhanced styling
+ * Last updated: 2025-12-29
+ */
 /* 
    Animation Utilities for Landing Page
    Reusable animation classes and keyframes
@@ -302,3 +307,4 @@
 .animate-flip {
     animation: flip 1s ease;
 }
+
