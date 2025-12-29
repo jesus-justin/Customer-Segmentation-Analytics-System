@@ -682,6 +682,13 @@ def get_started():
     return render_template('get-started.html')
 
 
+@app.route('/test-buttons')
+def test_buttons():
+    """Test page for button functionality."""
+    app_logger.info("Button test page accessed")
+    return render_template('test-buttons.html')
+
+
 @app.route('/analytics')
 def index():
     """
