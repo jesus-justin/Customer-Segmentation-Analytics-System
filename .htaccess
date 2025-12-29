@@ -1,0 +1,14 @@
+# Redirect all Apache requests to Flask server
+# This application is a Flask (Python) app, not Apache/PHP
+
+# Redirect to Flask server
+RedirectMatch 301 ^/Customer-Segmentation-Analytics-System/(.*)$ http://localhost:5000/
+
+# Alternative: Show error message
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /Customer-Segmentation-Analytics-System/
+    
+    # Redirect everything to the Flask server
+    RewriteRule ^(.*)$ http://localhost:5000/ [R=301,L]
+</IfModule>
