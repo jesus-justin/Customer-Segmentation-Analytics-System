@@ -1,3 +1,8 @@
+/**
+ * advanced-typography.css
+ * Stylesheet with enhanced styling
+ * Last updated: 2025-12-29
+ */
 /* Advanced CSS: Advanced Typography System */
 .typography-heading-xl {
     font-size: 3.5rem;
@@ -51,3 +56,4 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
+
