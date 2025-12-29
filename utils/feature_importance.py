@@ -1,4 +1,9 @@
 """
+FEATURE IMPORTANCE Module
+Enhanced utility module for customer segmentation analytics
+Last updated: 2025-12-29
+"""
+"""
 Feature importance and cluster characterization utilities
 """
 
@@ -202,3 +207,4 @@ def generate_cluster_summary(
         summaries[int(cluster_id)] = summary
     
     return summaries
+
