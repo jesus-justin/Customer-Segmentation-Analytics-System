@@ -1,4 +1,9 @@
 """
+PREPROCESSING Module
+Enhanced utility module for customer segmentation analytics
+Last updated: 2025-12-29
+"""
+"""
 Data preprocessing utilities for customer segmentation
 """
 
@@ -187,3 +192,4 @@ def get_correlation_matrix(df: pd.DataFrame) -> Dict[str, Dict[str, float]]:
     """
     numeric_df = df.select_dtypes(include=[np.number])
     return numeric_df.corr().round(4).to_dict()
+
