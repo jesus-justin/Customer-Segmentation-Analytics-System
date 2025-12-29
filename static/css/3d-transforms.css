@@ -1,3 +1,8 @@
+/**
+ * 3d-transforms.css
+ * Stylesheet with enhanced styling
+ * Last updated: 2025-12-29
+ */
 /* Advanced CSS: 3D Transform Effects */
 .transform-3d-card {
     perspective: 1000px;
@@ -32,3 +37,4 @@
     color: white;
     transform: rotateY(180deg);
 }
+
