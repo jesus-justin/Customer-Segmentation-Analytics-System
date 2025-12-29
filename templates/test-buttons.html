@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 50px;
+            background: #0f172a;
+            color: white;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 20px;
+        }
+        h1 {
+            color: #60a5fa;
+        }
+        .btn-primary, .btn-secondary {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+            position: relative !important;
+            z-index: 10000 !important;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+        }
+        .btn-secondary {
+            background: rgba(148,163,184,0.3);
+            color: #e2e8f0;
+            border: 1px solid rgba(148,163,184,0.5);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1e40af, #1e3a8a);
+            transform: translateY(-2px);
+        }
+        .btn-secondary:hover {
+            background: rgba(148,163,184,0.5);
+        }
+        .status {
+            margin-top: 30px;
+            padding: 20px;
+            background: #065f46;
+            border-radius: 10px;
+            border-left: 4px solid #10b981;
+        }
+        #log {
+            margin-top: 20px;
+            padding: 15px;
+            background: #000;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin: 5px 0;
+            color: #10b981;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔧 Button Click Test Page</h1>
+        <p>This page tests if buttons are clickable. If these work, the issue is template caching.</p>
+        
+        <div style="margin: 30px 0;">
+            <a href="/analytics" class="btn-primary" id="btnAnalytics">
+                <i class="fas fa-chart-line"></i> Open Analytics
+            </a>
+            <a href="/health" class="btn-secondary" id="btnHealth">
+                <i class="fas fa-heartbeat"></i> Health Check
+            </a>
+        </div>
+        
+        <div class="status">
+            <strong>✅ Instructions:</strong>
+            <ol>
+                <li>Try clicking the buttons above</li>
+                <li>Check the log below for click events</li>
+                <li>Buttons should navigate to /analytics or /health</li>
+            </ol>
+        </div>
+        
+        <div id="log">
+            <div class="log-entry">📋 Log initialized. Click buttons to see events...</div>
+        </div>
+    </div>
+
+    <script>
+        const log = document.getElementById('log');
+        
+        function addLog(message) {
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.textContent = `${new Date().toLocaleTimeString()} - ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        addLog('🚀 Script loaded');
+        
+        // Test button 1
+        const btnAnalytics = document.getElementById('btnAnalytics');
+        if (btnAnalytics) {
+            addLog('✅ Found Analytics button');
+            
+            btnAnalytics.addEventListener('mouseenter', () => {
+                addLog('🖱️  Mouse ENTERED Analytics button');
+            });
+            
+            btnAnalytics.addEventListener('click', (e) => {
+                addLog('🎯 Analytics button CLICKED!');
+                addLog('Navigating to /analytics in 1 second...');
+                setTimeout(() => {
+                    window.location.href = '/analytics';
+                }, 1000);
+                e.preventDefault();
+            });
+        } else {
+            addLog('❌ Analytics button NOT found');
+        }
+        
+        // Test button 2
+        const btnHealth = document.getElementById('btnHealth');
+        if (btnHealth) {
+            addLog('✅ Found Health Check button');
+            
+            btnHealth.addEventListener('mouseenter', () => {
+                addLog('🖱️  Mouse ENTERED Health Check button');
+            });
+            
+            btnHealth.addEventListener('click', (e) => {
+                addLog('🎯 Health Check button CLICKED!');
+                addLog('Navigating to /health in 1 second...');
+                setTimeout(() => {
+                    window.location.href = '/health';
+                }, 1000);
+                e.preventDefault();
+            });
+        } else {
+            addLog('❌ Health Check button NOT found');
+        }
+        
+        addLog('✅ All button handlers attached');
+    </script>
+</body>
+</html>
