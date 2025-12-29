@@ -1,3 +1,8 @@
+/**
+ * aria-enhancements.js
+ * Enhanced with better documentation
+ * Last updated: 2025-12-29
+ */
 <!-- HTML Enhancement: ARIA Labels and Attributes -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -20,3 +25,4 @@
         });
     });
 </script>
+
