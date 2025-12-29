@@ -1,3 +1,8 @@
+/**
+ * backdrop-effects.css
+ * Stylesheet with enhanced styling
+ * Last updated: 2025-12-29
+ */
 /* CSS Enhancement: Backdrop Blur Effects */
 .backdrop-blur {
     backdrop-filter: blur(8px);
@@ -11,3 +16,4 @@
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(4px);
 }
+
