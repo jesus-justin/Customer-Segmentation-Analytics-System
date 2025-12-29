@@ -1,3 +1,8 @@
+"""
+STATE Module
+Enhanced utility module for customer segmentation analytics
+Last updated: 2025-12-29
+"""
 import os
 import joblib
 from datetime import datetime
@@ -36,3 +41,4 @@ def get_state_history(path: str = STATE_FILE) -> List[Dict[str, Any]]:
         }]
     except Exception:
         return []
+
