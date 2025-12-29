@@ -1,3 +1,8 @@
+/**
+ * dom-utils.js
+ * Enhanced with better documentation
+ * Last updated: 2025-12-29
+ */
 <!-- JS Enhancement: DOM Utilities -->
 <script>
     const DOMUtils = {
@@ -19,3 +24,4 @@
         getParent: (element, selector) => element.closest(selector)
     };
 </script>
+
