@@ -1,3 +1,8 @@
+/**
+ * data-tracking.js
+ * Enhanced with better documentation
+ * Last updated: 2025-12-29
+ */
 <!-- HTML Enhancement: Data Attributes for Enhanced Tracking -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -18,3 +23,4 @@
         });
     });
 </script>
+
