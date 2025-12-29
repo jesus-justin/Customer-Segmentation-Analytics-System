@@ -1,3 +1,8 @@
+/**
+ * chart.js
+ * Enhanced with better documentation
+ * Last updated: 2025-12-29
+ */
 /*
    Customer Segmentation Analytics System - JavaScript
    Handles all client-side interactions and API calls
