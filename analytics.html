@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard | Customer Segmentation</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0 0 10px 0;
+            color: #2563eb;
+            font-size: 2.5rem;
+        }
+        .header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .nav-link {
+            padding: 10px 20px;
+            background: #f1f5f9;
+            color: #2563eb;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .nav-link:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .content-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        .content-box h2 {
+            color: #1e293b;
+            margin-top: 0;
+        }
+        .alert {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .alert h3 {
+            margin: 0 0 10px 0;
+            color: #92400e;
+        }
+        .alert p {
+            margin: 0;
+            color: #78350f;
+            line-height: 1.6;
+        }
+        .btn-primary {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature-card {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #2563eb;
+        }
+        .feature-card h3 {
+            margin: 0 0 10px 0;
+            color: #1e293b;
+        }
+        .feature-card p {
+            margin: 0;
+            color: #64748b;
+            line-height: 1.6;
+        }
+        .code-box {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .code-box code {
+            color: #38bdf8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-chart-pie"></i> Analytics Dashboard</h1>
+            <p>Customer Segmentation & Clustering Analysis</p>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="get-started.html" class="nav-link"><i class="fas fa-rocket"></i> Get Started</a>
+                <a href="START_HERE.html" class="nav-link"><i class="fas fa-book"></i> Documentation</a>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h2>🚀 Launch Analytics Dashboard</h2>
+            
+            <div class="alert">
+                <h3>⚠️ Flask Server Required</h3>
+                <p>The full analytics features require the Flask server to be running. This HTML page is a gateway to help you access the actual application.</p>
+            </div>
+
+            <h3>Option 1: Quick Start (Recommended)</h3>
+            <p>If you haven't started the Flask server yet, double-click this file:</p>
+            <div class="code-box">
+                <code>START_SERVER.bat</code>
+            </div>
+            <p>Then click the button below to access the dashboard:</p>
+            <a href="http://localhost:5000/analytics" class="btn-primary" style="margin: 20px 0; display: inline-block;">
+                <i class="fas fa-external-link-alt"></i> Open Analytics Dashboard (Flask)
+            </a>
+
+            <h3 style="margin-top: 40px;">Option 2: Manual Start</h3>
+            <p>Start the Flask server manually in PowerShell:</p>
+            <div class="code-box">
+                cd C:\xampp\htdocs\Customer-Segmentation-Analytics-System<br>
+                python src\app.py
+            </div>
+            <p>Then visit: <a href="http://localhost:5000/analytics" style="color: #2563eb; font-weight: 600;">http://localhost:5000/analytics</a></p>
+        </div>
+
+        <div class="content-box">
+            <h2>📊 What You Can Do</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-upload"></i> Upload Data</h3>
+                    <p>Upload CSV files with customer data or use sample datasets</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-chart-bar"></i> Analyze Clusters</h3>
+                    <p>Automatic K-Means clustering with optimal cluster detection</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-eye"></i> Visualize Results</h3>
+                    <p>Interactive charts and detailed cluster profiles</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-download"></i> Export Data</h3>
+                    <p>Download results in CSV, JSON, or HTML format</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-box" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-left: 4px solid #0ea5e9;">
+            <h2>💡 Pro Tips</h2>
+            <ul style="color: #0c4a6e; line-height: 2;">
+                <li>Make sure Flask server is running before accessing analytics features</li>
+                <li>Use <strong>http://localhost:5000</strong> URLs for the actual application</li>
+                <li>These .html files in the root are just convenient gateways</li>
+                <li>Bookmark <code>http://localhost:5000/analytics</code> for quick access</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

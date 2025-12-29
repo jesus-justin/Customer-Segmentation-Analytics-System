@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation Analytics - How to Start</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .status {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .status.running {
+            background: #ecfdf5;
+            border-color: #10b981;
+        }
+        .status h2 {
+            color: #166534;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        .status p {
+            color: #166534;
+            font-size: 1.05rem;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #1e293b;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .links {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .link-button {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1e293b;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+        }
+        .link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: #2563eb;
+        }
+        .link-button .icon {
+            font-size: 2rem;
+            margin-right: 20px;
+            min-width: 50px;
+            text-align: center;
+        }
+        .link-button .text {
+            flex: 1;
+        }
+        .link-button .title {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #2563eb;
+            margin-bottom: 5px;
+        }
+        .link-button .desc {
+            font-size: 0.95rem;
+            color: #64748b;
+        }
+        .command-box {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin-top: 15px;
+            overflow-x: auto;
+        }
+        .command-box code {
+            color: #38bdf8;
+        }
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+        }
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 50px;
+            position: relative;
+        }
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .warning strong {
+            color: #92400e;
+        }
+        .success {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .success strong {
+            color: #065f46;
+        }
+        .footer {
+            background: #f8fafc;
+            padding: 20px 40px;
+            text-align: center;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Customer Segmentation Analytics System</h1>
+            <p>AI-Powered Customer Insights Platform</p>
+        </div>
+        
+        <div class="content">
+            <div class="status running">
+                <h2>✅ Flask Server is Running!</h2>
+                <p>Your application is now accessible at <strong>http://localhost:5000</strong></p>
+            </div>
+
+            <div class="section">
+                <h2>🔗 Quick Access Links</h2>
+                <div class="links">
+                    <a href="http://localhost:5000/" class="link-button">
+                        <div class="icon">🏠</div>
+                        <div class="text">
+                            <div class="title">Home / Landing Page</div>
+                            <div class="desc">Professional landing page with features overview</div>
+                        </div>
+                    </a>
+                    
+                    <a href="http://localhost:5000/analytics" class="link-button">
+                        <div class="icon">📊</div>
+                        <div class="text">
+                            <div class="title">Analytics Dashboard</div>
+                            <div class="desc">Main application - Upload CSV and perform clustering analysis</div>
+                        </div>
+                    </a>
+                    
+                    <a href="http://localhost:5000/get-started" class="link-button">
+                        <div class="icon">🚀</div>
+                        <div class="text">
+                            <div class="title">Get Started Guide</div>
+                            <div class="desc">Quick start guide and tutorials</div>
+                        </div>
+                    </a>
+                    
+                    <a href="http://localhost:5000/health" class="link-button">
+                        <div class="icon">💚</div>
+                        <div class="text">
+                            <div class="title">Health Check</div>
+                            <div class="desc">API health status endpoint</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📋 How to Use the Application</h2>
+                <ol class="steps">
+                    <li>
+                        <strong>Access the Analytics Dashboard</strong><br>
+                        Click on the "Analytics Dashboard" link above or navigate to <a href="http://localhost:5000/analytics">http://localhost:5000/analytics</a>
+                    </li>
+                    <li>
+                        <strong>Upload Your CSV File</strong><br>
+                        Drag and drop your customer data CSV file or click to browse. Sample datasets are available in the <code>data/</code> folder.
+                    </li>
+                    <li>
+                        <strong>Run Clustering Analysis</strong><br>
+                        The system will automatically preprocess your data and suggest optimal cluster numbers. Click "Run Clustering" to segment your customers.
+                    </li>
+                    <li>
+                        <strong>View Results</strong><br>
+                        Explore interactive visualizations, cluster profiles, and business recommendations.
+                    </li>
+                    <li>
+                        <strong>Export Results</strong><br>
+                        Download your clustered data as CSV or generate HTML reports for sharing.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>⚙️ Server Management</h2>
+                
+                <h3 style="margin-top: 20px; color: #475569;">To Stop the Server:</h3>
+                <p>Close the PowerShell window that is running the Flask server, or press <strong>Ctrl+C</strong> in that window.</p>
+
+                <h3 style="margin-top: 20px; color: #475569;">To Start the Server Again:</h3>
+                <div class="command-box">
+                    <code>cd c:\xampp\htdocs\Customer-Segmentation-Analytics-System</code><br>
+                    <code>python src\app.py</code>
+                </div>
+
+                <h3 style="margin-top: 20px; color: #475569;">Or Use the Startup Script:</h3>
+                <div class="command-box">
+                    <code>powershell -ExecutionPolicy Bypass -File config\windows\start_app.ps1</code>
+                </div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Important Note:</strong> This is a Flask application, NOT an Apache/PHP application. Always access it through <strong>http://localhost:5000</strong>, not through your XAMPP Apache server URLs.
+            </div>
+
+            <div class="success">
+                <strong>✨ Pro Tip:</strong> The Flask server automatically restores your last analysis state when it starts, so you can pick up where you left off!
+            </div>
+
+            <div class="section" style="margin-top: 40px;">
+                <h2>📚 Documentation</h2>
+                <p>For detailed documentation, check out these files in the <code>docs/</code> folder:</p>
+                <ul style="margin-left: 40px; margin-top: 15px;">
+                    <li><strong>QUICK_START.md</strong> - Quick start guide</li>
+                    <li><strong>API_DOCUMENTATION.md</strong> - Complete API reference</li>
+                    <li><strong>DEPLOYMENT.md</strong> - Production deployment guide</li>
+                    <li><strong>TESTING.md</strong> - Testing and quality assurance</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Customer Segmentation Analytics System v1.0</p>
+            <p>Powered by Flask, Scikit-Learn, and Plotly</p>
+        </div>
+    </div>
+
+    <script>
+        // Auto-refresh server status every 5 seconds
+        setInterval(function() {
+            fetch('http://localhost:5000/health')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'ok') {
+                        document.querySelector('.status').classList.add('running');
+                    }
+                })
+                .catch(error => {
+                    document.querySelector('.status').classList.remove('running');
+                    document.querySelector('.status h2').innerHTML = '❌ Flask Server is Not Running';
+                    document.querySelector('.status p').innerHTML = 'Please start the Flask server using the commands below.';
+                });
+        }, 5000);
+    </script>
+</body>
+</html>

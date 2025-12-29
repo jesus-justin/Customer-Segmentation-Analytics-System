@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started | Customer Segmentation Analytics</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/landing.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; background: #0f172a; color: #e2e8f0; }
+        .page { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem 3rem; }
+        .hero { background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 18px; padding: 2rem; box-shadow: 0 12px 30px rgba(0,0,0,0.35); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center; }
+        .hero h1 { margin: 0 0 0.75rem; font-size: 2rem; color: #ffffff; }
+        .hero p { margin: 0 0 1.25rem; color: #cbd5e1; line-height: 1.6; }
+        .pill { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.9rem; background: rgba(59,130,246,0.15); color: #bfdbfe; border-radius: 999px; font-size: 0.9rem; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+        .btn-primary { background: linear-gradient(135deg, #2563eb, #1e40af); color: #fff; padding: 0.75rem 1.4rem; border-radius: 12px; text-decoration: none; font-weight: 600; box-shadow: 0 10px 25px rgba(37,99,235,0.35); display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(37,99,235,0.5); }
+        .btn-secondary { background: rgba(148,163,184,0.12); color: #e2e8f0; padding: 0.75rem 1.2rem; border-radius: 12px; text-decoration: none; font-weight: 600; border: 1px solid rgba(148,163,184,0.2); display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: all 0.3s ease; }
+        .btn-secondary:hover { background: rgba(148,163,184,0.2); transform: translateY(-2px); }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .card { background: rgba(255,255,255,0.02); border: 1px solid rgba(148,163,184,0.2); border-radius: 14px; padding: 1rem; box-shadow: 0 8px 22px rgba(0,0,0,0.2); }
+        .card h3 { margin: 0 0 0.6rem; color: #f8fafc; }
+        .card p { margin: 0 0 0.75rem; color: #cbd5e1; line-height: 1.5; }
+        .code-block { background: #0b1221; border: 1px solid rgba(148,163,184,0.2); border-radius: 10px; padding: 0.9rem 1rem; overflow-x: auto; font-family: "Consolas", "SFMono-Regular", monospace; font-size: 0.95rem; color: #e2e8f0; }
+        .list { list-style: none; padding: 0; margin: 0.5rem 0 0; }
+        .list li { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.4rem 0; color: #cbd5e1; }
+        .list i { color: #38bdf8; margin-top: 0.1rem; }
+        .section-title { margin: 2.2rem 0 0.6rem; font-size: 1.4rem; color: #f8fafc; }
+        .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .chip { background: rgba(37,99,235,0.12); color: #bfdbfe; padding: 0.35rem 0.7rem; border-radius: 999px; font-size: 0.85rem; border: 1px solid rgba(59,130,246,0.25); }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="hero">
+            <div>
+                <div class="pill"><i class="fas fa-rocket"></i> Onboarding</div>
+                <h1>Get Started in Minutes</h1>
+                <p>Run the analytics dashboard, load a sample dataset, and generate cluster insights with zero setup friction.</p>
+                <div class="hero-actions">
+                    <a class="btn-primary" href="analytics.html"><i class="fas fa-chart-line"></i> Open Analytics</a>
+                    <a class="btn-secondary" href="home.html"><i class="fas fa-home"></i> Back to Home</a>
+                </div>
+                <div class="chips">
+                    <span class="chip">Upload or use sample data</span>
+                    <span class="chip">Find optimal k</span>
+                    <span class="chip">Export results</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Quick Setup</h3>
+                <p>For the full Python-powered analytics features, start the Flask server:</p>
+                <div class="code-block">python src\app.py</div>
+                <p style="margin:0.6rem 0 0.4rem;">Then access at:</p>
+                <div class="code-block">http://localhost:5000</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">3-Step Flow</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3><i class="fas fa-upload"></i> Step 1 — Load Data</h3>
+                <p>Upload your CSV on the Analytics page or click "Load Sample Dataset" to try the built-in sample instantly.</p>
+                <ul class="list">
+                    <li><i class="fas fa-check-circle"></i><span>Drag/drop CSV or choose file</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Auto data-quality metrics after upload</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-sliders-h"></i> Step 2 — Analyze</h3>
+                <p>Click "Find Optimal Clusters" then run clustering. The dashboard shows metrics, profiles, and visualizations.</p>
+                <ul class="list">
+                    <li><i class="fas fa-check-circle"></i><span>Silhouette scoring to pick k</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Feature importance and summaries per cluster</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-download"></i> Step 3 — Export & Share</h3>
+                <p>Export clustered results as CSV/JSON/HTML and snapshot the state for reuse.</p>
+                <ul class="list">
+                    <li><i class="fas fa-check-circle"></i><span>Use Export in the dashboard</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Call /api/save-state to persist analysis</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">Quick Links</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>📊 Analytics Dashboard</h3>
+                <p>Start analyzing your customer data</p>
+                <a href="analytics.html" class="btn-primary" style="margin-top: 1rem;">Open Dashboard</a>
+            </div>
+            <div class="card">
+                <h3>🏠 Home Page</h3>
+                <p>Learn more about the system</p>
+                <a href="home.html" class="btn-secondary" style="margin-top: 1rem;">Go to Home</a>
+            </div>
+            <div class="card">
+                <h3>📚 Documentation</h3>
+                <p>Read the complete guide</p>
+                <a href="START_HERE.html" class="btn-secondary" style="margin-top: 1rem;">View Docs</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
