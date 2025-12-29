@@ -1,3 +1,8 @@
+/**
+ * animation-utils.js
+ * Enhanced with better documentation
+ * Last updated: 2025-12-29
+ */
 <!-- JS Enhancement: Animation Utilities -->
 <script>
     const AnimationUtils = {
@@ -27,3 +32,4 @@
         }
     };
 </script>
+
