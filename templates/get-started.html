@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Page-specific styles - must load AFTER external CSS -->
     <style>
         body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; background: #0f172a; color: #e2e8f0; }
         .page { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem 3rem; }
@@ -15,9 +17,13 @@
         .hero h1 { margin: 0 0 0.75rem; font-size: 2rem; color: #ffffff; }
         .hero p { margin: 0 0 1.25rem; color: #cbd5e1; line-height: 1.6; }
         .pill { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.9rem; background: rgba(59,130,246,0.15); color: #bfdbfe; border-radius: 999px; font-size: 0.9rem; }
-        .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-        .btn-primary { background: linear-gradient(135deg, #2563eb, #1e40af); color: #fff; padding: 0.75rem 1.4rem; border-radius: 12px; text-decoration: none; font-weight: 600; box-shadow: 0 10px 25px rgba(37,99,235,0.35); }
-        .btn-secondary { background: rgba(148,163,184,0.12); color: #e2e8f0; padding: 0.75rem 1.2rem; border-radius: 12px; text-decoration: none; font-weight: 600; border: 1px solid rgba(148,163,184,0.2); }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; position: relative; z-index: 100; }
+        .btn-primary { background: linear-gradient(135deg, #2563eb, #1e40af) !important; color: #fff !important; padding: 0.75rem 1.4rem; border-radius: 12px; text-decoration: none; font-weight: 600; box-shadow: 0 10px 25px rgba(37,99,235,0.35); display: inline-flex !important; align-items: center; gap: 0.5rem; cursor: pointer !important; transition: all 0.3s ease; border: none; pointer-events: auto !important; position: relative; z-index: 101; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(37,99,235,0.5); }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-secondary { background: rgba(148,163,184,0.12) !important; color: #e2e8f0 !important; padding: 0.75rem 1.2rem; border-radius: 12px; text-decoration: none; font-weight: 600; border: 1px solid rgba(148,163,184,0.2); display: inline-flex !important; align-items: center; gap: 0.5rem; cursor: pointer !important; transition: all 0.3s ease; pointer-events: auto !important; position: relative; z-index: 101; }
+        .btn-secondary:hover { background: rgba(148,163,184,0.2) !important; border-color: rgba(148,163,184,0.4); transform: translateY(-2px); }
+        .btn-secondary:active { transform: translateY(0); }
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
         .card { background: rgba(255,255,255,0.02); border: 1px solid rgba(148,163,184,0.2); border-radius: 14px; padding: 1rem; box-shadow: 0 8px 22px rgba(0,0,0,0.2); }
         .card h3 { margin: 0 0 0.6rem; color: #f8fafc; }
@@ -30,6 +36,41 @@
         .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
         .chip { background: rgba(37,99,235,0.12); color: #bfdbfe; padding: 0.35rem 0.7rem; border-radius: 999px; font-size: 0.85rem; border: 1px solid rgba(59,130,246,0.25); }
     </style>
+    
+    <!-- CRITICAL: Button fix styles - MUST override everything -->
+    <style>
+        /* Force buttons to be clickable - override ALL external CSS */
+        a.btn-primary,
+        a.btn-secondary {
+            pointer-events: auto !important;
+            cursor: pointer !important;
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            position: relative !important;
+            z-index: 10000 !important;
+        }
+        
+        /* Ensure parent containers don't block */
+        .hero-actions {
+            pointer-events: auto !important;
+            position: relative !important;
+            z-index: 9999 !important;
+        }
+        
+        .hero {
+            pointer-events: auto !important;
+        }
+        
+        .page {
+            pointer-events: auto !important;
+        }
+        
+        /* Visual debugging - add border to clickable buttons */
+        a.btn-primary:hover,
+        a.btn-secondary:hover {
+            outline: 2px solid rgba(255,255,0,0.5) !important;
+        }
+    </style>
 </head>
 <body>
     <div class="page">
@@ -39,8 +80,8 @@
                 <h1>Get Started in Minutes</h1>
                 <p>Run the analytics dashboard, load a sample dataset, and generate cluster insights with zero setup friction.</p>
                 <div class="hero-actions">
-                    <a class="btn-primary" href="{{ url_for('index') }}"><i class="fas fa-chart-line"></i> Open Analytics</a>
-                    <a class="btn-secondary" href="{{ url_for('health') }}"><i class="fas fa-heartbeat"></i> Health Check</a>
+                    <a class="btn-primary" href="/analytics"><i class="fas fa-chart-line"></i> Open Analytics</a>
+                    <a class="btn-secondary" href="/health"><i class="fas fa-heartbeat"></i> Health Check</a>
                 </div>
                 <div class="chips">
                     <span class="chip">Upload or use sample data</span>
@@ -107,5 +148,100 @@ GET /api/status</div>
             </div>
         </div>
     </div>
+    <script>
+        // AGGRESSIVE button click fix - runs immediately
+        (function() {
+            console.log('🔧 Button fix script loading...');
+            
+            function makeButtonClickable(selector, targetUrl, label) {
+                const btn = document.querySelector(selector);
+                if (!btn) {
+                    console.error('❌ Button not found:', selector);
+                    return;
+                }
+                
+                console.log('✅ Found button:', label, btn);
+                
+                // Force all clickability styles
+                btn.style.pointerEvents = 'auto';
+                btn.style.cursor = 'pointer';
+                btn.style.zIndex = '10000';
+                btn.style.position = 'relative';
+                btn.style.userSelect = 'none';
+                
+                // Add visual feedback on hover
+                btn.addEventListener('mouseenter', function() {
+                    console.log('🖱️  Mouse entered:', label);
+                    this.style.outline = '3px solid yellow';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.outline = 'none';
+                });
+                
+                // Add click handler with highest priority
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    
+                    console.log('🎯 CLICKED:', label);
+                    console.log('Navigating to:', targetUrl);
+                    
+                    // Add visual feedback
+                    this.style.opacity = '0.7';
+                    
+                    // Navigate
+                    setTimeout(function() {
+                        window.location.href = targetUrl;
+                    }, 100);
+                }, {capture: true, passive: false});
+                
+                // Also add mousedown handler
+                btn.addEventListener('mousedown', function(e) {
+                    console.log('👇 Mouse down on:', label);
+                }, {capture: true});
+                
+                // Add touchstart for mobile
+                btn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    console.log('👆 Touch on:', label);
+                    window.location.href = targetUrl;
+                }, {capture: true, passive: false});
+            }
+            
+            // Try to initialize immediately
+            function init() {
+                console.log('🚀 Initializing buttons...');
+                makeButtonClickable('a.btn-primary[href="/analytics"]', '/analytics', 'Open Analytics');
+                makeButtonClickable('a.btn-secondary[href="/health"]', '/health', 'Health Check');
+                
+                // Force all links to be clickable
+                const allButtons = document.querySelectorAll('.btn-primary, .btn-secondary');
+                console.log('📊 Total buttons found:', allButtons.length);
+                allButtons.forEach(function(btn, index) {
+                    btn.style.pointerEvents = 'auto';
+                    btn.style.cursor = 'pointer';
+                    btn.style.zIndex = '10000';
+                    console.log('  Button', index + 1, ':', btn.href || btn.getAttribute('href'));
+                });
+            }
+            
+            // Run on DOM ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+            
+            // Also run after a short delay as backup
+            setTimeout(init, 500);
+            setTimeout(init, 1000);
+            
+            console.log('✅ Button fix script loaded');
+        })();
+    </script>
 </body>
+</html></body>
 </html>
+
