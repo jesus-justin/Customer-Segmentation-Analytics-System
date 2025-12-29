@@ -1,4 +1,9 @@
 """
+EXPORT Module
+Enhanced utility module for customer segmentation analytics
+Last updated: 2025-12-29
+"""
+"""
 Export utilities for clustering results in multiple formats
 """
 
@@ -207,3 +212,4 @@ def export_html_report(
         f.write(html_content)
     
     return filepath
+
